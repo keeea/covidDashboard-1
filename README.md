@@ -31,4 +31,5 @@ We choose four aspects of COVID-19 data, confirmed cases, hospitalization, death
 
 ## Wireframes
 
-![covidDashboardWireframe.drawio](covidDashboardWireframe.drawio.png)
+https://drive.google.com/file/d/1zi2evZn-RHMamo0tQIRPCEhquiXRbpcX/view?usp=sharing
+https://drive.google.com/file/d/12h1He7GiW3R8MC6eOSxkG-6f5V_hSA0Y/view?usp=sharing
