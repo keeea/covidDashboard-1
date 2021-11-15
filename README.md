@@ -18,7 +18,7 @@ We choose four aspects of COVID-19 data, confirmed cases, hospitalization, death
 
 **Vaccine:** -- [OpenDataPhilly](https://www.opendataphilly.org/dataset/covid-vaccinations), updated "daily" at 4 pm every day (according to city [metadata](https://metadata.phila.gov/#home/datasetdetails/601abeb9f910a2001ce794e2/representationdetails/60b93022a59bf60021d2a63a/))
 
-**COVID Cumulative Historical Snapshots:** -- [OpenDataPhilly](https://www.opendataphilly.org/dataset/covid-cumulative-historical-data), updated "daily".
+**COVID Cumulative Historical Snapshots:** -- [OpenDataPhilly](https://www.opendataphilly.org/dataset/covid-cumulative-historical-data), updated "daily" at 4 pm every day.
 
 
 
