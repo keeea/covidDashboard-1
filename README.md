@@ -22,4 +22,4 @@ We choose four aspects of COVID-19 data, confirmed cases, hospitalization, death
 
 ## Wireframes
 
-![Service Account menu item](screenshots/service-account-menu-item.png)
+![covidDashboardWireframe.drawio](covidDashboardWireframe.drawio.png)
