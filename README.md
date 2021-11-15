@@ -30,6 +30,8 @@ We choose four aspects of COVID-19 data, confirmed cases, hospitalization, death
 
 
 ## Wireframes
+![ConclusionWireframe drawio](https://user-images.githubusercontent.com/90301308/141871347-633dbcb8-497b-4296-ba3a-3cbb24032286.png)
+![2ndEditionWireframe](https://user-images.githubusercontent.com/90301308/141871358-9990990e-aec4-426a-96a1-1d8278c869dc.png)
 
-https://drive.google.com/file/d/1zi2evZn-RHMamo0tQIRPCEhquiXRbpcX/view?usp=sharing
-https://drive.google.com/file/d/12h1He7GiW3R8MC6eOSxkG-6f5V_hSA0Y/view?usp=sharing
+
+* Anran Zheng, anranz@design.upenn.edu
