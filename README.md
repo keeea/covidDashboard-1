@@ -21,3 +21,5 @@ We choose four aspects of COVID-19 data, confirmed cases, hospitalization, death
 **COVID Cumulative Historical Snapshots:** -- [OpenDataPhilly](https://www.opendataphilly.org/dataset/covid-cumulative-historical-data), updated "daily".
 
 ## Wireframes
+
+![Service Account menu item](screenshots/service-account-menu-item.png)
