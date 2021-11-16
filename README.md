@@ -55,7 +55,7 @@ All the data is csv.gz format. For tested/death/hospitalized data, the study per
 
 **Total population by ZIP in Philadelphia:** -- BigQuery public datasets,updated with the national census, here we choose 2018 5-years ACS.
 
-**Philadelphia geometry:** -- [GeoServices](https://github.com/PhiladelphiaController/esri2gpd), updated as needed.
+**Map of Philadelphia:** -- [GeoServices](https://github.com/PhiladelphiaController/esri2gpd), updated as needed.
 
 
 ## Wireframes
