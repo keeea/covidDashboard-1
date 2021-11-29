@@ -5,13 +5,13 @@ import pandas_gbq
 def main(ds):
     local_path = gcs_to_local_file(
         gcs_bucket_name='anranz_cloudservices',
-        gcs_blob_name=f'covid/{ds}/breakthrough.csv',
+        gcs_blob_name=f'covid/{ds}/vac_ago.csv',
     )
     df = pd.read_csv(local_path)
-    df.to_gbq(f'covid.breakthrough',if_exists='replace')
+    df.columns = df.columns.str.replace(' ', '_')
+    df.to_gbq(f'covid.vac_ago',if_exists='replace')
 
 if __name__ == '__main__':
     import datetime as dt
     main(ds=dt.date.today())
-
 

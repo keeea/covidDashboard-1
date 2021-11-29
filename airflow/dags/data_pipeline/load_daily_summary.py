@@ -8,7 +8,7 @@ def main(ds):
         gcs_blob_name=f'covid/{ds}/daily_summary.csv',
     )
     df = pd.read_csv(local_path)
-    df.to_gbq(f'covid.daily_summary')
+    df.to_gbq(f'covid.daily_summary',if_exists='replace')
 
 if __name__ == '__main__':
     import datetime as dt
