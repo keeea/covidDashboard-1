@@ -65,7 +65,7 @@ select
     b.age_65_74 death_age_65_74,
     b.age_75up death_age_75up,
     b.Asian_Pacific_Islander death_Asian_Pacific_Islander,
-    b.Black_African_American death_,
+    b.Black_African_American death_Black_African_American,
     b.Hispanic_Latino death_Hispanic_Latino,
     b.White death_White 
 from wk_case as a

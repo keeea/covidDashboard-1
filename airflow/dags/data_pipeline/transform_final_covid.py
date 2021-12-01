@@ -8,7 +8,10 @@ def main():
     run_transform_gbq('staging', 'wk_case_death', sql_dir)
     run_transform_gbq('staging', 'NYC_map', sql_dir)
     run_transform_gbq('staging', 'vac_now_neigh', sql_dir)
+    run_transform_gbq('staging', 'wk_hosp', sql_dir)
     run_transform_gbq('final', 'covid_map', sql_dir)
+    run_transform_gbq('final', 'wk_all', sql_dir)
+    
 
 
 if __name__ == '__main__':
