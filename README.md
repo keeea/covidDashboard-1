@@ -31,7 +31,11 @@ We choose four aspects of COVID-19 data, **confirmed cases, hospitalization, dea
 
 
 ## Wireframes
-https://drive.google.com/file/d/1zi2evZn-RHMamo0tQIRPCEhquiXRbpcX/view?usp=sharing
+![ConclusionWireframe drawio (1)](https://user-images.githubusercontent.com/90301308/144319389-68c32989-d914-4009-890b-084bd070d046.png)
+
+
+
+
 ![2ndEditionWireframe](https://user-images.githubusercontent.com/90301308/141871358-9990990e-aec4-426a-96a1-1d8278c869dc.png)
 
 
