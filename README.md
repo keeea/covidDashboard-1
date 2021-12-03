@@ -1,4 +1,4 @@
-# Visualization of COVID-19 in Philadelphia
+# Visualization of COVID-19 in NYC
 
 **By**:
 * Anran Zheng, anranz@design.upenn.edu
