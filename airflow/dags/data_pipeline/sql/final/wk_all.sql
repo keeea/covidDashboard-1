@@ -40,6 +40,6 @@ select
     b.Black_African_American hosp_Black_African_American,
     b.Hispanic_Latino hosp_Hispanic_Latino,
     b.White hosp_White
-from `musa509-332421.staging.wk_case_death` a
-full join `musa509-332421.staging.wk_hosp` b
+from `elated-guild-327520.staging.wk_case_death` a
+full join `elated-guild-327520.staging.wk_hosp` b
 on a.week_ending=b.week_ending
