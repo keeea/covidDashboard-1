@@ -83,10 +83,10 @@ with DAG(dag_id='data_pipeline',
 
     sql_dir = Path(__file__).parent / 'sql'
 
-    transform_staging_buildings_task = PythonOperator(
-        task_id='transform_staging_buildings',
+    transform_final_covid = PythonOperator(
+        task_id='transform_final_covid',
         python_callable=run_transform_gbq,
-        op_args=['staging', 'buildings', sql_dir],
+        op_args=['staging', '', sql_dir],
     )
 
     # DEPENDENCIES ~~~~~
