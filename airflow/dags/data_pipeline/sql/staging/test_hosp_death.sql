@@ -4,7 +4,7 @@ with test_7d as (
         modzcta,
         percentpositivity_7day,
         median_daily_test_rate
-    from `musa509-332421.covid.test_7d`
+    from `elated-guild-327520.covid.test_7d`
 ),
 
 hosp_death_28d as (
@@ -15,7 +15,7 @@ hosp_death_28d as (
         death_count_28day,
         death_rate_28day,
         daterange
-    from `musa509-332421.covid.hosp_death_28d`
+    from `elated-guild-327520.covid.hosp_death_28d`
 )
 
 select 

@@ -4,4 +4,4 @@ select
     neighborhood_name,
     count_fully_cumulative,
     perc_fully
-from `musa509-332421.covid.vac_now_neigh`
+from `elated-guild-327520.covid.vac_now_neigh`
