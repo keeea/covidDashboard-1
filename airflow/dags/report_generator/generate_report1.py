@@ -7,8 +7,18 @@ from pipeline_tools import local_file_to_gcs
 
 def main(ds):
     # Get the data necessary for the report.
-    wk_all_df = pd.read_gbq('SELECT * FROM final.wk_all')
-    daily_summary_df=pd.read_gbq('SELECT * FROM covid.daily_summary')
+    #choose year 2021, visualize the race/sex curve
+    wk_all_df = pd.read_gbq("SELECT * FROM final.wk_all WHERE week_ending LIKE '%2021'")
+    #choose year 2021, visualize the time curve
+    daily_summary_df=pd.read_gbq("SELECT * FROM covid.daily_summary WHERE date_of_interest LIKE '%2021'")
+    #real-time data table
+    new_report_df=pd.read_gbq("SELECT * FROM final.new_report")
+    #top test table
+    top_test_df=pd.read_gbq("SELECT * FROM final.top_test")
+    #vaccine curve
+    vac_accumulated_by_day_df=pd.read_gbq("SELECT * FROM final.vac_accumulated_by_day")
+    #visualize the hospitalization comparision barplot under vaccine or unvaccine
+    breakthrough_df=pd.read_gbq("SELECT * FROM covid.breakthrough")
 
     #download the map data
     covid_map_df = pd.read_gbq('SELECT * FROM final.covid_map')
@@ -22,7 +32,10 @@ def main(ds):
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
         covid_map=covid_map_gdf.to_json(),
-        top_region=covid_map_df.to_dict('list'),
+        new_report=new_report_df.to_dict('list'),
+        top_test=top_test_df.to_dict('list'),
+        vac_accumulated_by_day_report=vac_accumulated_by_day_df.to_dict('list'),
+        breakthrough=breakthrough_df.to_dict('list'),
     )
 
     # Determine the folder to save the rendered report pages into; create it if
