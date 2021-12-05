@@ -19,15 +19,13 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto 1fr 1fr;
+      grid-template-rows: auto 30vh 1fr 1fr;
       grid-template-areas:
         "header header"
-        "map list"
-        "map chart1"
-        "map chart2"
-        "map chart3"
-        "map chart4"
-        "map chart5";
+        "map map"
+        "list chart1"
+        "chart2 chart3"
+        "chart4 chart5";
       column-gap: 1rem;
       row-gap: 1rem;
     }
@@ -104,7 +102,7 @@
 
     */
     var initialCenter = [40.7128, -74.0060];  // <-- Latitude, Longitude
-    var initialZoom = 11;
+    var initialZoom = 10;
     var densitymap = L.map('densitymap', {
       zoomSnap: 0,
       zoomDelta: 0.25
