@@ -26,7 +26,7 @@ def main(ds):
     covid_map_gdf = gpd.GeoDataFrame(covid_map_df, geometry='geometry')
 
     # Render the data into the templates.
-    env = Environment(loader=PackageLoader('generate_report'))
+    env = Environment(loader=PackageLoader('generate_report1'))
     template = env.get_template('index_lab9.html')
     output = template.render(
         wk_all=wk_all_df.to_dict('list'),
