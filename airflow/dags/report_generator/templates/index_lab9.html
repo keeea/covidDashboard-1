@@ -1,5 +1,6 @@
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Visualization of COVID-19 in NYC</title>
 
   <!-- Leaflet stylesheet is below -->
@@ -19,7 +20,7 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 35vh 1fr 1fr;
+      grid-template-rows: auto 35vh 1fr 1fr 1fr 1fr;
       grid-template-areas:
         "header header"
         "map map"
@@ -57,6 +58,7 @@
     }
     #agechart{
       grid-area: chart6;
+      height: 300px;
     }
   </style>
 </head>
@@ -302,7 +304,7 @@
     
     Vaccinations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
-    */
+    */ 
     var options = {
         series: [{
           name: 'vaccine',
@@ -400,7 +402,7 @@
     COVID Cases by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
     
     */
-    /*
+    
     var agechartoptions = {
       series: [
         {
@@ -467,21 +469,11 @@
         text: 'Positivity by Age',
         align: 'left'
       },
-      labels: {{wk_all['Week_of_ending']}},
-      xaxis: {
-        type: 'datetime',
-      },
-      yaxis: {
-        opposite: true
-      },
-      fill: {
-        opacity: 1
-      },
     };
       
     var agechart = new ApexCharts(document.querySelector("#agechart"), agechartoptions);
     agechart.render();
-  */
+  
     
   </script>
 </body>
