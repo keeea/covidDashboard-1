@@ -22,4 +22,5 @@ row_number() OVER(order by percentpositivity_7day desc ) as Rank,
 modzcta_name as neighborhood_name,
 concat(cast(percentpositivity_7day as string),"%") as percent_positivity_7day
 from data_map
+order by Rank
 limit 5
