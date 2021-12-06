@@ -19,14 +19,15 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 35vh 1fr 1fr;
+      grid-template-rows: auto 35vh 1fr 1fr auto auto;
       grid-template-areas:
         "header header"
         "map map"
         "list chart1"
         "chart2 chart3"
         "chart4 chart5"
-        "chart6 chart6";
+        "chart6 chart6"
+        "map2 map2";
       column-gap: 1rem;
       row-gap: 1rem;
     }
@@ -58,6 +59,10 @@
     #agechart{
       grid-area: chart6;
     }
+    #case_vax_map {
+      grid-area: map2;
+    height: 300px;
+    }
   </style>
 </head>
 
@@ -65,6 +70,33 @@
   <h1>Visualization of COVID-19 in NYC</h1>
 
   <div id="densitymap"></div>
+
+  <table>
+    <tr>
+      <td> </td>
+      <td>Daily Average</td>
+      <td>14-day Change of Daily Avg.</td>
+      <td>Total Reported</td>
+    </tr>
+    <tr>
+      <td>Cases</td>
+      <td>{{ new_report.CASE_COUNT_7DAY_AVG }}</td>
+      <td>{{ new_report.case_change }}</td>
+      <td>{{ new_report.case_count_total }}</td>
+    </tr>
+    <tr>
+      <td>Hospitalized</td>
+      <td>{{ new_report.HOSP_COUNT_7DAY_AVG }}</td>
+      <td>{{ new_report.hosp_change }}</td>
+      <td>{{ new_report.hosp_count_total }}</td>
+    </tr>
+    <tr>
+      <td>Hospitalized</td>
+      <td>{{ new_report.DEATH_COUNT_7DAY_AVG }}</td>
+      <td>{{ new_report.death_change }}</td>
+      <td>{{ new_report.death_count_total }}</td>
+    </tr>
+  </table>
 
   <div id="densitylist">
     <p>The 5 highest tested positivity rate neighbours are:</p>
@@ -86,6 +118,8 @@
   <div id="hosp_vac_chart"></div>
 
   <div id="agechart"></div>
+
+  <div id="case_vax_map"></div>
 
   <!-- Leaflet JavaScript library is below -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -482,7 +516,66 @@
     var agechart = new ApexCharts(document.querySelector("#agechart"), agechartoptions);
     agechart.render();
   */
+
+  
+
+    /* 
     
+    case_vax map of vaccinated case rate ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+    
+    */  
+  var initialCenter2 = [40.7128, -74.0060];  // <-- Latitude, Longitude
+  var initialZoom2= 10;
+  var case_vax_map = L.map('case_vax_map', {
+    zoomSnap: 0,
+    zoomDelta: 0.25
+  }).setView(initialCenter2, initialZoom2);
+
+  var baseLayer2 = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    subdomains: 'abcd',
+    minZoom: 0,
+    maxZoom: 20,
+    ext: 'png'
+  });
+  baseLayer2.addTo(case_vax_map);
+
+  function getColor2(d) {
+  return d > 0.005 ? '#800026' :
+         d > 0.003 ? '#BD0026' :
+         d > 0.002  ? '#E31A1C' :
+         d > 0.001  ? '#FC4E2A' :
+         d > 0.0005   ? '#FD8D3C' :
+         d > 0.0001  ? '#FEB24C' :
+         d > 0  ? '#FED976' :
+                    '#FFEDA0';
+  }
+
+  function getStyle2(feature) {
+    var scaledValue = feature.properties['case_vax_ratio'];
+    var featureColor = getColor2(scaledValue);
+
+    return {
+      color: featureColor,
+      weight: 2,
+    opacity: 1,
+    dashArray: '3',
+    fillOpacity: 0.7
+    };
+  }
+
+  function getTooltip(layer) {
+    var case_vax = layer.feature.properties['case_vax_ratio'];
+    return case_vax;
+  }
+
+  var case_vax_mapdata = {{covid_map}};
+  var dataLayer = L.geoJSON(case_vax_mapdata, {
+    style: getStyle2
+  });
+  dataLayer.bindTooltip(getTooltip)
+  dataLayer.addTo(case_vax_map);
+
   </script>
 </body>
 </html>
