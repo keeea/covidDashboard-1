@@ -3,7 +3,6 @@ with test_7d as (
         modzcta_name,
         modzcta,
         percentpositivity_7day,
-        people_positive,
         median_daily_test_rate
     from `elated-guild-327520.covid.test_7d`
 ),
@@ -23,7 +22,6 @@ select
         a.modzcta_name,
         a.modzcta,
         a.percentpositivity_7day,
-        a.people_positive,
         a.median_daily_test_rate,
         b.hospitalization_count_28day,
         b.hospitalization_rate_28day,

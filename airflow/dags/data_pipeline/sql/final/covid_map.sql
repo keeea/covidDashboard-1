@@ -3,7 +3,6 @@ with data_map as (
     a.modzcta_name,
     cast(a.modzcta as string) as modzcta,
     a.percentpositivity_7day,
-    a.people_positive,
     a.median_daily_test_rate,
     a.hospitalization_count_28day,
     a.hospitalization_rate_28day,
@@ -21,7 +20,6 @@ select
     a.modzcta_name,
     a.modzcta,
     a.percentpositivity_7day,
-    a.people_positive,
     a.median_daily_test_rate,
     a.hospitalization_count_28day,
     a.hospitalization_rate_28day,
@@ -29,7 +27,6 @@ select
     a.death_rate_28day,
     a.daterange,
     a.date,
-    a.people_positive/a.count_fully_cumulative as case_vax_ratio,    
     a.count_fully_cumulative,
     a.perc_fully,
     b.geometry
