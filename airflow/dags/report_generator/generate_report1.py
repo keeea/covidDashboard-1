@@ -29,7 +29,7 @@ def main(ds):
 
     # Render the data into the templates.
     env = Environment(loader=PackageLoader('generate_report1'))
-    template = env.get_template('index_lab9.html')
+    template = env.get_template('index.html')
     output = template.render(
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
@@ -47,7 +47,7 @@ def main(ds):
     output_folder.mkdir(parents=True, exist_ok=True)
 
     # Write the report to the local folder, and upload to GCS.
-    with open(output_folder / 'index_lab9.html', 'w') as local_file:
+    with open(output_folder / 'index.html', 'w') as local_file:
         local_file.write(output)
         local_file_to_gcs(
             local_file_name=local_file.name,
