@@ -52,10 +52,36 @@ def main(ds):
         local_file_to_gcs(
             local_file_name=local_file.name,
             gcs_bucket_name='anranz_cloudservices',
-            gcs_blob_name=f'{ds}/index_lab9.html',
+            gcs_blob_name=f'{ds}/index.html',
             content_type='text/html,'
         )
+    print("Index.html report generated!")
 
+
+    # Render the auxiliary data into the templates.
+    env = Environment(loader=PackageLoader('generate_report1'))
+    template = env.get_template('deathsAndHospitalizations.html')
+    output = template.render(
+        wk_all=wk_all_df.to_dict('list'),
+        daily_summary=daily_summary_df.to_dict('list'),
+        covid_map=covid_map_gdf.to_json(),
+        new_report=new_report_df.to_dict('list'),
+        top_test=top_test_df.to_dict('records'),
+        vac_accumulated_by_day=vac_accumulated_by_day_df.to_dict('list'),
+        breakthrough=breakthrough_df.to_dict('list'),
+        #death_treated=dh_28day.to_dict('list')
+    )
+
+    # Write the auxiliary report to the local folder, and upload to GCS.
+    with open(output_folder / 'deathsAndHospitalizations.html', 'w') as local_file:
+        local_file.write(output)
+        local_file_to_gcs(
+            local_file_name=local_file.name,
+            gcs_bucket_name='anranz_cloudservices',
+            gcs_blob_name=f'{ds}/deathsAndHospitalizations.html',
+            content_type='text/html,'
+        )
+    print("Index.html report generated!")
     print("Finished!")
 
 if __name__ == '__main__':
