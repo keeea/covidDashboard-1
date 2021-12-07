@@ -11,6 +11,8 @@
    integrity="sha512-GQSxWe9Cj4o4EduO7zO9HjULmD4olIjiQqZ7VJuwBxZlkWaUFGCxRkn39jYnD2xZBtEilm0m4WBG7YEmQuMs5Q=="
    crossorigin="anonymous" referrerpolicy="no-referrer" />
    <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
 
 
   <!-- Stylesheet for the report's custom layout is below -->
@@ -92,7 +94,10 @@
 
 <body>
   <h1>Visualization of COVID-19 in NYC</h1>
-
+  <div id="densitylist"></div>
+<p>This dashboard visualizes the basic situation of COVID-19 in epidemic curves, maps, tables and bar plots in terms of daily, last 14 or 28 days. The most severe pandemic regions were identified in tables and maps to help government understand the basic pandemic trend, know how to allocate medical resources and adjust the prevention strategies.</p>
+<p>The hotspots of confirmed cases and hospitalization concentrated mainly in Staten Island and Queens. Counties with lower incidence rate are Bronx and Manhattan. </p>
+<p>Data source: NYC Open Data,  New York State Department of Health </p>
   <div id="densitymap"></div>
   <table>
       <tr>
@@ -384,40 +389,92 @@
 
     */
     var options = {
-        series: [{
-          name: 'vaccine',
+      chart: {
+        height: 350,
+        width:500,
+        type: "line",
+        stacked: false
+      },
+      dataLabels: {
+        enabled: false
+      },
+      colors: ["#247BA0","#FF1654"],
+      series: [
+        {
+          name: "First Dose",
+          data: {{vac_accumulated_by_day['First_Dose']}}
+        },
+        {
+          name: "Series Complete",
           data: {{vac_accumulated_by_day['Series_Complete']}}
-        }],
-        chart: {
-          type: 'area',
-          height: 300,
-          width:400,
-          zoom: {
-            enabled: false
+        }
+      ],
+      stroke: {
+        curve: 'smooth'
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "20%"
+        }
+      },
+      labels: {{ vac_accumulated_by_day['date'] }},
+      xaxis: {
+        type: 'datetime',
+      },
+      yaxis: [
+        {
+          axisTicks: {
+            show: true
+          },
+          axisBorder: {
+            show: true,
+            color: "#247BA0"
+          },
+          labels: {
+            style: {
+              colors: "#247BA0"
+            }
+          },
+          title: {
+            text: "First Dose",
+            style: {
+              color: "#247BA0"
+            }
           }
         },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth',
-                    width: 2,
-        },
-
-        title: {
-          text: 'vaccination situation (2nd dose)',
-          align: 'left'
-        },
-        labels: {{vac_accumulated_by_day['date']}},
-        xaxis: {
-          type: 'datetime',
-        },
-        yaxis: {
-          opposite: true
-        },
-        legend: {
-          horizontalAlign: 'left'
+        {
+          opposite: true,
+          axisTicks: {
+            show: true
+          },
+          axisBorder: {
+            show: true,
+            color: "#FF1654"
+          },
+          labels: {
+            style: {
+              colors: "#FF1654"
+            }
+          },
+          title: {
+            text: "Series Complete",
+            style: {
+              color: "#FF1654"
+            }
+          }
         }
+      ],
+      tooltip: {
+        shared: false,
+        intersect: true,
+        x: {
+          show: false
+        }
+      },
+      legend: {
+        horizontalAlign: "left",
+        offsetX: 40
+      }
     };
 
     var vaccchart = new ApexCharts(document.querySelector("#vaccchart"), options);
