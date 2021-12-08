@@ -35,7 +35,6 @@ def main(ds):
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
         covid_map=covid_map_gdf.to_json(),
-
         new_report=new_report_df.to_dict('records'),
         top_test=top_test_df.to_dict('records'),
         vac_accumulated_by_day=vac_accumulated_by_day_df.to_dict('list'),
