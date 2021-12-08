@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>covidDeaths</title>
+  <title>covidHospitalizations</title>
 
   <!-- Leaflet stylesheet is below -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -36,7 +36,7 @@
       grid-area: map2;
       height: 50vh;
     }
-    #deathchart {
+    #hospchart {
       grid-area: chart2;
     }
     #agechart{
@@ -49,14 +49,14 @@
 </head>
 
 <body>
-  <h1>Visualization of COVID-19 Deaths in NYC</h1>
+  <h1>Visualization of COVID-19 in NYC</h1>
 
   <!-- Table 1 goes in its own div -->
   <div id="summarytable">
     <nav>
       <a href="index.html">Home</a>
       <a href="cases.html">Cases</a>
-      <a href="hospital.html">Hospitalization</a>
+      <a href="deaths.html">Deaths</a>
     </nav>
 
     <table>
@@ -75,7 +75,7 @@
     </table>
   </div>
 
-  <div id="deathchart"></div>
+  <div id="hospchart"></div>
 
   <div id="case_vax_map"></div>
 
@@ -97,31 +97,35 @@
 
   <script>
     
+
     /*
     
-    deaths ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    hosp ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     */
+
     var options = {
-        series: [{
-          name: 'death',
-          data: {{ daily_summary['DEATH_COUNT']}}
-        }],
-        chart: {
-          type: 'area',
-          height: 300,
-          zoom: {
-            enabled: false
+      series: [{
+        name: 'hospital',
+        data: {{ daily_summary['HOSPITALIZED_COUNT']}}
+      }],
+      chart: {
+        type: 'area',
+        height: 300,
+        zoom: {
+          enabled: false
         }
       },
       dataLabels: {
         enabled: false
       },
-      stroke: {curve: 'smooth',
+      stroke: {
+        curve: 'smooth',
                 width: 2,
       },
+
       title: {
-        text: 'time curve of daily death',
+        text: 'time curve of daily hospitalization',
         align: 'left'
       },
       labels: {{ daily_summary['date_of_interest'] }},
@@ -136,10 +140,9 @@
       }
     };
 
-    var deathchart = new ApexCharts(document.querySelector("#deathchart"), options);
-    deathchart.render();
+    var hospchart = new ApexCharts(document.querySelector("#hospchart"), options);
+    hospchart.render();
 
-    
     
     /*
     
@@ -208,43 +211,43 @@
       series: [
         {
           name: '0 to 4',
-          data: {{ wk_all['deaths_age_0_4'] }}
+          data: {{ wk_all['hosp_age_0_4'] }}
         },
         {
           name: '5 to 12',
-          data: {{ wk_all['deaths_age_5_12'] }}
+          data: {{ wk_all['hosp_age_5_12'] }}
         },
         {
           name: '13 to 17',
-          data: {{ wk_all['deaths_age_13_17'] }}
+          data: {{ wk_all['hosp_age_13_17'] }}
         },
         {
           name: '18 to 24',
-          data: {{ wk_all['deaths_age_18_24'] }}
+          data: {{ wk_all['hosp_age_18_24'] }}
         },
         {
           name: '25 to 34',
-          data: {{ wk_all['deaths_age_25_34'] }}
+          data: {{ wk_all['hosp_age_25_34'] }}
         },
         {
           name: '35 to 44',
-          data: {{ wk_all['deaths_age_35_44'] }}
+          data: {{ wk_all['hosp_age_35_44'] }}
         },
         {
           name: '45 to 54',
-          data: {{ wk_all['deaths_age_45_54'] }}
+          data: {{ wk_all['hosp_age_45_54'] }}
         },
         {
           name: '55 to 64',
-          data: {{ wk_all['deaths_age_55_64'] }}
+          data: {{ wk_all['hosp_age_55_64'] }}
         },
         {
           name: '65 to 74',
-          data: {{ wk_all['deaths_age_65_74'] }}
+          data: {{ wk_all['hosp_age_65_74'] }}
         },
         {
           name: '75 and up',
-          data: {{ wk_all['deaths_age_75up'] }}
+          data: {{ wk_all['hosp_age_75up'] }}
         }
       ],
       chart: {
@@ -267,7 +270,7 @@
         colors: ['transparent']
       },
       title: {
-        text: 'Deaths by Age',
+        text: 'Positivity by Age',
         align: 'left'
       },
     };

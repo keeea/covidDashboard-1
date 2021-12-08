@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>covidDeaths</title>
+  <title>covidCases</title>
 
   <!-- Leaflet stylesheet is below -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -36,7 +36,7 @@
       grid-area: map2;
       height: 50vh;
     }
-    #deathchart {
+    #casechart {
       grid-area: chart2;
     }
     #agechart{
@@ -49,14 +49,14 @@
 </head>
 
 <body>
-  <h1>Visualization of COVID-19 Deaths in NYC</h1>
+  <h1>Visualization of COVID-19 Cases in NYC</h1>
 
   <!-- Table 1 goes in its own div -->
   <div id="summarytable">
     <nav>
       <a href="index.html">Home</a>
-      <a href="cases.html">Cases</a>
       <a href="hospital.html">Hospitalization</a>
+      <a href="deaths.html">Deaths</a>
     </nav>
 
     <table>
@@ -75,7 +75,7 @@
     </table>
   </div>
 
-  <div id="deathchart"></div>
+  <div id="casechart"></div>
 
   <div id="case_vax_map"></div>
 
@@ -97,31 +97,35 @@
 
   <script>
     
+    
     /*
     
-    deaths ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    hosp ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     */
+
     var options = {
-        series: [{
-          name: 'death',
-          data: {{ daily_summary['DEATH_COUNT']}}
-        }],
-        chart: {
-          type: 'area',
-          height: 300,
-          zoom: {
-            enabled: false
+      series: [{
+        name: 'hospital',
+        data: {{ daily_summary['HOSPITALIZED_COUNT']}}
+      }],
+      chart: {
+        type: 'area',
+        height: 300,
+        zoom: {
+          enabled: false
         }
       },
       dataLabels: {
         enabled: false
       },
-      stroke: {curve: 'smooth',
+      stroke: {
+        curve: 'smooth',
                 width: 2,
       },
+
       title: {
-        text: 'time curve of daily death',
+        text: 'time curve of daily hospitalization',
         align: 'left'
       },
       labels: {{ daily_summary['date_of_interest'] }},
@@ -136,10 +140,9 @@
       }
     };
 
-    var deathchart = new ApexCharts(document.querySelector("#deathchart"), options);
-    deathchart.render();
+    var casechart = new ApexCharts(document.querySelector("#casechart"), options);
+    casechart.render();
 
-    
     
     /*
     
@@ -267,7 +270,7 @@
         colors: ['transparent']
       },
       title: {
-        text: 'Deaths by Age',
+        text: 'Positivity by Age',
         align: 'left'
       },
     };

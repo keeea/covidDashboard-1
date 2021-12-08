@@ -27,8 +27,8 @@
       grid-template-areas:
         "header header"
         "text map"
-        "table1 chart1"
-        "chart4 chart5";
+        "chart4 chart1"
+        "chart5 chart5";
       column-gap: 1rem;
       row-gap: 1rem;
     }
@@ -41,9 +41,6 @@
     #densitymap {
       grid-area: map;
     height: 300px;
-    }
-    #summarytable {
-      grid-area: table1;
     }
     #casechart {
       grid-area: chart1;
@@ -118,26 +115,7 @@
   
   </div>
 
-  <!-- Table 1 goes in its own div -->
-  <div id="summarytable">
-    
-
-    <table>
-      <tr>
-        <td>Rank</td>
-        <td>Region</td>
-        <td>14-day Positive rate</td>
-      </tr>
-      {% for current_test in top_test %}
-      <tr>
-        <td>{{ current_test.Rank }}</td>
-        <td>{{ current_test.neighborhood_name }}</td>
-        <td>{{ current_test.percent_positivity_7day }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-    
+      
   <div id="densitymap"></div>
 
   <div id="casechart"></div>
