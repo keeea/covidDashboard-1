@@ -23,13 +23,12 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 35vh 1fr 35vh 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 10vh 1fr 35vh 1fr 1fr 1fr 1fr 1fr;
       grid-template-areas:
         "header header"
         "text map"
-        "list chart1"
-        "chart4 chart5"
-        "chart6 chart6";
+        "table1 chart1"
+        "chart4 chart5";
       column-gap: 1rem;
       row-gap: 1rem;
     }
@@ -43,8 +42,8 @@
       grid-area: map;
     height: 300px;
     }
-    #densitylist {
-      grid-area: list;
+    #summarytable {
+      grid-area: table1;
     }
     #casechart {
       grid-area: chart1;
@@ -55,9 +54,6 @@
     #hosp_vac_chart{
       grid-area: chart5;
     }
-    #agechart{
-      grid-area: chart6;
-    } 
     .legend {
     padding: 6px 8px;
     background: white;
@@ -89,28 +85,18 @@
 
 <body>
   <h1>Visualization of COVID-19 in NYC</h1>
+
+  <!-- Explatory text goes in its own div -->
   <div id="explanatoryText">
+    <nav>
+      <a href="cases.html">Cases</a>
+      <a href="hospital.html">Hospitalization</a>
+      <a href="deaths.html">Deaths</a>
+    </nav>
+
     <p>This dashboard visualizes the basic situation of COVID-19 in epidemic curves, maps, tables and bar plots in terms of daily, last 14 or 28 days. The most severe pandemic regions were identified in tables and maps to help government understand the basic pandemic trend, know how to allocate medical resources and adjust the prevention strategies.</p>
     <p>The hotspots of confirmed cases and hospitalization concentrated mainly in Staten Island and Queens. Counties with lower incidence rate are Bronx and Manhattan. </p>
     <p>Data source: NYC Open Data,  New York State Department of Health </p>
-  </div>
-  <div id="densitylist"></div>
-    
-  <div id="densitymap"></div>
-  <table>
-      <tr>
-        <td>Rank</td>
-        <td>Region</td>
-        <td>14-day Positive rate</td>
-      </tr>
-      {% for current_test in top_test %}
-      <tr>
-        <td>{{ current_test.Rank }}</td>
-        <td>{{ current_test.neighborhood_name }}</td>
-        <td>{{ current_test.percent_positivity_7day }}</td>
-      </tr>
-      {% endfor %}
-    </table>
 
     <table>
       <tr>
@@ -129,6 +115,30 @@
       {% endfor %}
     </table>
 
+  
+  </div>
+
+  <!-- Table 1 goes in its own div -->
+  <div id="summarytable">
+    
+
+    <table>
+      <tr>
+        <td>Rank</td>
+        <td>Region</td>
+        <td>14-day Positive rate</td>
+      </tr>
+      {% for current_test in top_test %}
+      <tr>
+        <td>{{ current_test.Rank }}</td>
+        <td>{{ current_test.neighborhood_name }}</td>
+        <td>{{ current_test.percent_positivity_7day }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+    
+  <div id="densitymap"></div>
 
   <div id="casechart"></div>
 
@@ -431,84 +441,7 @@
     var hosp_vac_chart = new ApexCharts(document.querySelector("#hosp_vac_chart"), options);
     hosp_vac_chart.render();
 
-    /* 
     
-    COVID Cases by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    
-    */
-    
-    var agechartoptions = {
-      series: [
-        {
-          name: '0 to 4',
-          data: {{ wk_all['case_age_0_4'] }}
-        },
-        {
-          name: '5 to 12',
-          data: {{ wk_all['case_age_5_12'] }}
-        },
-        {
-          name: '13 to 17',
-          data: {{ wk_all['case_age_13_17'] }}
-        },
-        {
-          name: '18 to 24',
-          data: {{ wk_all['case_age_18_24'] }}
-        },
-        {
-          name: '25 to 34',
-          data: {{ wk_all['case_age_25_34'] }}
-        },
-        {
-          name: '35 to 44',
-          data: {{ wk_all['case_age_35_44'] }}
-        },
-        {
-          name: '45 to 54',
-          data: {{ wk_all['case_age_45_54'] }}
-        },
-        {
-          name: '55 to 64',
-          data: {{ wk_all['case_age_55_64'] }}
-        },
-        {
-          name: '65 to 74',
-          data: {{ wk_all['case_age_65_74'] }}
-        },
-        {
-          name: '75 and up',
-          data: {{ wk_all['case_age_75up'] }}
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-        },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded'
-        },
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
-      title: {
-        text: 'Positivity by Age',
-        align: 'left'
-      },
-    };
-      
-    var agechart = new ApexCharts(document.querySelector("#agechart"), agechartoptions);
-    agechart.render();
-
-
   </script>
 </body>
 </html>
