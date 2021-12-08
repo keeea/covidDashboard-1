@@ -16,9 +16,12 @@ def main(ds):
     #top test table
     top_test_df=pd.read_gbq("SELECT * FROM final.top_test")
     #vaccine curve
-    vac_accumulated_by_day_df=pd.read_gbq("SELECT * FROM final.vac_accumulated_by_day")
+
+    vac_accumulated_by_day_df=pd.read_gbq("SELECT * FROM final.vac_accumulated_by_day WHERE date LIKE '%2021'")
     #visualize the hospitalization comparision barplot under vaccine or unvaccine
     breakthrough_df=pd.read_gbq("SELECT * FROM covid.breakthrough")
+    #map of ratio of death/treated 
+    #dh_28day=pd.read_gbq("SELECT * FROM final.wk_all ORDER BY date DESC LIMIT 1")
 
     #download the map data
     covid_map_df = pd.read_gbq('SELECT * FROM final.covid_map')
@@ -32,10 +35,12 @@ def main(ds):
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
         covid_map=covid_map_gdf.to_json(),
-        new_report=new_report_df.to_dict('list'),
+
+        new_report=new_report_df.to_dict('records'),
         top_test=top_test_df.to_dict('records'),
         vac_accumulated_by_day=vac_accumulated_by_day_df.to_dict('list'),
         breakthrough=breakthrough_df.to_dict('list'),
+        #death_treated=dh_28day.to_dict('list')
     )
 
     # Determine the folder to save the rendered report pages into; create it if

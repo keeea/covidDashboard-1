@@ -11,6 +11,9 @@
    integrity="sha512-GQSxWe9Cj4o4EduO7zO9HjULmD4olIjiQqZ7VJuwBxZlkWaUFGCxRkn39jYnD2xZBtEilm0m4WBG7YEmQuMs5Q=="
    crossorigin="anonymous" referrerpolicy="no-referrer" />
    <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
 
 
   <!-- Stylesheet for the report's custom layout is below -->
@@ -19,14 +22,17 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 35vh 1fr 1fr;
+      grid-template-rows: auto 35vh 1fr 1fr auto auto;
+
       grid-template-areas:
         "header header"
         "map map"
         "list chart1"
         "chart2 chart3"
         "chart4 chart5"
-        "chart6 chart6";
+        "chart6 chart6"
+        "map2 map2";
+
       column-gap: 1rem;
       row-gap: 1rem;
     }
@@ -58,22 +64,87 @@
     #agechart{
       grid-area: chart6;
     }
+
+    #case_vax_map {
+      grid-area: map2;
+    height: 300px;
+    }  .legend {
+    padding: 6px 8px;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  .legend ol {
+    list-style: none;
+    padding: 0;
+    display: flex;
+  }
+  .legend li {
+    display: flex;
+    gap: 0.25em;
+  }
+  .legend li:first-child {
+    flex-direction: row-reverse;
+  }
+  .key-color {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+  }
+
   </style>
 </head>
 
 <body>
   <h1>Visualization of COVID-19 in NYC</h1>
-
+  <div id="densitylist"></div>
+<p>This dashboard visualizes the basic situation of COVID-19 in epidemic curves, maps, tables and bar plots in terms of daily, last 14 or 28 days. The most severe pandemic regions were identified in tables and maps to help government understand the basic pandemic trend, know how to allocate medical resources and adjust the prevention strategies.</p>
+<p>The hotspots of confirmed cases and hospitalization concentrated mainly in Staten Island and Queens. Counties with lower incidence rate are Bronx and Manhattan. </p>
+<p>Data source: NYC Open Data,  New York State Department of Health </p>
   <div id="densitymap"></div>
+  <table>
+      <tr>
+        <td>Rank</td>
+        <td>Region</td>
+        <td>14-day Positive rate</td>
+      </tr>
+      {% for current_test in top_test %}
+      <tr>
+        <td>{{ current_test.Rank }}</td>
+        <td>{{ current_test.neighborhood_name }}</td>
+        <td>{{ current_test.percent_positivity_7day }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  <table>
+    <tr>
+      <td> </td>
+      <td>Daily Average</td>
+      <td>14-day Change of Daily Avg.</td>
+      <td>Total Reported</td>
+    </tr>
+    <tr>
+      <td>Cases</td>
+      <td>{{ new_report.CASE_COUNT_7DAY_AVG }}</td>
+      <td>{{ new_report.case_change }}</td>
+      <td>{{ new_report.case_count_total }}</td>
+    </tr>
+    <tr>
+      <td>Hospitalized</td>
+      <td>{{ new_report.HOSP_COUNT_7DAY_AVG }}</td>
+      <td>{{ new_report.hosp_change }}</td>
+      <td>{{ new_report.hosp_count_total }}</td>
+    </tr>
+    <tr>
+      <td>Death</td>
+      <td>{{ new_report.DEATH_COUNT_7DAY_AVG }}</td>
+      <td>{{ new_report.death_change }}</td>
+      <td>{{ new_report.death_count_total }}</td>
+    </tr>
+  </table>
 
-  <div id="densitylist">
-    <p>The 5 highest tested positivity rate neighbours are:</p>
-    <ul>
-      {%- for top_test in top_test -%}
-        <li>{{ top_test.neighborhood_name}} with a tested positivity rate {{ top_test.percent_positivity_7day}} </li>
-      {%- endfor -%}
-    </ul>
-  </div>
 
   <div id="casechart"></div>
 
@@ -86,6 +157,8 @@
   <div id="hosp_vac_chart"></div>
 
   <div id="agechart"></div>
+
+  <div id="case_vax_map"></div>
 
   <!-- Leaflet JavaScript library is below -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -159,10 +232,29 @@
     dataLayer.bindTooltip(getTooltip)
     dataLayer.addTo(densitymap);
 
+    var overviewLegend = L.control({position: 'bottomright'});
+    overviewLegend.onAdd = function (map) {
+      var container = L.DomUtil.create('div', 'info legend');
+      container.innerHTML = `
+          <ol>
+            <li><span class="key-color" style="background: #FFEDA0;"></span><span class="key-label">Low</span></li>
+            <li><span class="key-color" style="background: #FED976;"></span></li>
+            <li><span class="key-color" style="background: #FEB24C;"></span></li>
+            <li><span class="key-color" style="background: #FD8D3C;"></span></li>
+            <li><span class="key-color" style="background: #FC4E2A;"></span></li>
+            <li><span class="key-color" style="background: #E31A1C;"></span></li>
+            <li><span class="key-color" style="background: #BD0026;"></span></li>
+            <li><span class="key-color" style="background: ##800026;"></span><span class="key-label">High</span></li>
+          </ol>
+          `;
+      return container;
+    };
+    overviewLegend.addTo(densitymap);
+    
     /*
-    
+
     Confirmed cases ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     */
     var options = {
         series: [{
@@ -210,9 +302,9 @@
     casechart.render();
 
     /*
-    
+
     deaths ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     */
     var options = {
         series: [{
@@ -253,9 +345,10 @@
     deathchart.render();
 
     /*
-    
+
     hosp ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
+
     */
 
     var options = {
@@ -299,54 +392,107 @@
     hospchart.render();
 
     /*
-    
+
     Vaccinations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     */
     var options = {
-        series: [{
-          name: 'vaccine',
+      chart: {
+        height: 350,
+        width:500,
+        type: "line",
+        stacked: false
+      },
+      dataLabels: {
+        enabled: false
+      },
+      colors: ["#247BA0","#FF1654"],
+      series: [
+        {
+          name: "First Dose",
+          data: {{vac_accumulated_by_day['First_Dose']}}
+        },
+        {
+          name: "Series Complete",
           data: {{vac_accumulated_by_day['Series_Complete']}}
-        }],
-        chart: {
-          type: 'area',
-          height: 300,
-          width:400,
-          zoom: {
-            enabled: false
+        }
+      ],
+      stroke: {
+        curve: 'smooth'
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "20%"
+        }
+      },
+      labels: {{ vac_accumulated_by_day['date'] }},
+      xaxis: {
+        type: 'datetime',
+      },
+      yaxis: [
+        {
+          axisTicks: {
+            show: true
+          },
+          axisBorder: {
+            show: true,
+            color: "#247BA0"
+          },
+          labels: {
+            style: {
+              colors: "#247BA0"
+            }
+          },
+          title: {
+            text: "First Dose",
+            style: {
+              color: "#247BA0"
+            }
           }
         },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth',
-                    width: 2,
-        },
-
-        title: {
-          text: 'vaccination situation (2nd dose)',
-          align: 'left'
-        },
-        labels: {{vac_accumulated_by_day['date']}},
-        xaxis: {
-          type: 'datetime',
-        },
-        yaxis: {
-          opposite: true
-        },
-        legend: {
-          horizontalAlign: 'left'
+        {
+          opposite: true,
+          axisTicks: {
+            show: true
+          },
+          axisBorder: {
+            show: true,
+            color: "#FF1654"
+          },
+          labels: {
+            style: {
+              colors: "#FF1654"
+            }
+          },
+          title: {
+            text: "Series Complete",
+            style: {
+              color: "#FF1654"
+            }
+          }
         }
+      ],
+      tooltip: {
+        shared: false,
+        intersect: true,
+        x: {
+          show: false
+        }
+      },
+      legend: {
+        horizontalAlign: "left",
+        offsetX: 40
+      }
+
     };
 
     var vaccchart = new ApexCharts(document.querySelector("#vaccchart"), options);
     vaccchart.render();
 
     /*
-    
+
     comparison of the hosp under vac or unvac ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     */
     var options = {
         series: [{
@@ -395,11 +541,12 @@
     var hosp_vac_chart = new ApexCharts(document.querySelector("#hosp_vac_chart"), options);
     hosp_vac_chart.render();
 
-    /* 
-    
-    COVID Cases by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    
+    /*
+
+    COVID Cases by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     */
+    
     /*
     var agechartoptions = {
       series: [
@@ -478,11 +625,12 @@
         opacity: 1
       },
     };
-      
+    
     var agechart = new ApexCharts(document.querySelector("#agechart"), agechartoptions);
     agechart.render();
   */
-    
+
+
   </script>
 </body>
 </html>
