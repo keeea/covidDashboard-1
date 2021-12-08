@@ -28,10 +28,15 @@ def main(ds):
     covid_map_df.geometry = gpd.GeoSeries.from_wkt(covid_map_df.geometry)
     covid_map_gdf = gpd.GeoDataFrame(covid_map_df, geometry='geometry')
 
+    # Determine the folder to save the rendered report pages into; create it if
+    # it doesn't already exist. E.g.: report_generator/_reports/2021-11-22/
+    output_folder = Path(__file__).parent / '_reports' / ds.isoformat()
+    output_folder.mkdir(parents=True, exist_ok=True)
+
     # Render the data into the templates.
-    env = Environment(loader=PackageLoader('generate_report1'))
-    template = env.get_template('index.html')
-    output = template.render(
+    IndexEnv = Environment(loader=PackageLoader('generate_report1'))
+    IndexTemplate = IndexEnv.get_template('index.html')
+    IndexOutput = IndexTemplate.render(
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
         covid_map=covid_map_gdf.to_json(),
@@ -42,14 +47,10 @@ def main(ds):
         #death_treated=dh_28day.to_dict('list')
     )
 
-    # Determine the folder to save the rendered report pages into; create it if
-    # it doesn't already exist. E.g.: report_generator/_reports/2021-11-22/
-    output_folder = Path(__file__).parent / '_reports' / ds.isoformat()
-    output_folder.mkdir(parents=True, exist_ok=True)
 
     # Write the report to the local folder, and upload to GCS.
     with open(output_folder / 'index.html', 'w') as local_file:
-        local_file.write(output)
+        local_file.write(IndexOutput)
         local_file_to_gcs(
             local_file_name=local_file.name,
             gcs_bucket_name='anranz_cloudservices',
@@ -60,9 +61,9 @@ def main(ds):
 
 
     # Render the auxiliary data into the templates.
-    env = Environment(loader=PackageLoader('generate_report1'))
-    template = env.get_template('deathsAndHospitalizations.html')
-    output = template.render(
+    deathsEnv = Environment(loader=PackageLoader('generate_report1'))
+    deathsTemplate = deathsEnv.get_template('deaths.html')
+    deathsOutput = deathsTemplate.render(
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
         covid_map=covid_map_gdf.to_json(),
@@ -74,15 +75,15 @@ def main(ds):
     )
 
     # Write the auxiliary report to the local folder, and upload to GCS.
-    with open(output_folder / 'deathsAndHospitalizations.html', 'w') as local_file:
-        local_file.write(output)
+    with open(output_folder / 'deaths.html', 'w') as local_file:
+        local_file.write(deathsOutput)
         local_file_to_gcs(
             local_file_name=local_file.name,
             gcs_bucket_name='anranz_cloudservices',
-            gcs_blob_name=f'{ds}/deathsAndHospitalizations.html',
+            gcs_blob_name=f'{ds}/deaths.html',
             content_type='text/html,'
         )
-    print("Index.html report generated!")
+    print("deaths.html report generated!")
     print("Finished!")
 
 if __name__ == '__main__':
