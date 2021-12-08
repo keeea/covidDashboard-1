@@ -12,7 +12,8 @@
    crossorigin="anonymous" referrerpolicy="no-referrer" />
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
 
 
   <!-- Stylesheet for the report's custom layout is below -->
@@ -22,6 +23,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto 35vh 1fr 1fr auto auto;
+
       grid-template-areas:
         "header header"
         "map map"
@@ -30,6 +32,7 @@
         "chart4 chart5"
         "chart6 chart6"
         "map2 map2";
+
       column-gap: 1rem;
       row-gap: 1rem;
     }
@@ -61,6 +64,7 @@
     #agechart{
       grid-area: chart6;
     }
+
     #case_vax_map {
       grid-area: map2;
     height: 300px;
@@ -89,6 +93,7 @@
     width: 1rem;
     height: 1rem;
   }
+
   </style>
 </head>
 
@@ -139,6 +144,7 @@
       <td>{{ new_report.death_count_total }}</td>
     </tr>
   </table>
+
 
   <div id="casechart"></div>
 
@@ -244,6 +250,7 @@
       return container;
     };
     overviewLegend.addTo(densitymap);
+    
     /*
 
     Confirmed cases ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -340,6 +347,7 @@
     /*
 
     hosp ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
     */
 
@@ -475,6 +483,7 @@
         horizontalAlign: "left",
         offsetX: 40
       }
+
     };
 
     var vaccchart = new ApexCharts(document.querySelector("#vaccchart"), options);
@@ -537,6 +546,7 @@
     COVID Cases by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     */
+    
     /*
     var agechartoptions = {
       series: [
@@ -615,88 +625,11 @@
         opacity: 1
       },
     };
-
+    
     var agechart = new ApexCharts(document.querySelector("#agechart"), agechartoptions);
     agechart.render();
   */
 
-
-
-    /*
-
-    case_vax map of vaccinated case rate ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    */
-  var initialCenter2 = [40.7128, -74.0060];  // <-- Latitude, Longitude
-  var initialZoom2= 10;
-  var case_vax_map = L.map('case_vax_map', {
-    zoomSnap: 0,
-    zoomDelta: 0.25
-  }).setView(initialCenter2, initialZoom2);
-
-  var baseLayer2 = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
-    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    subdomains: 'abcd',
-    minZoom: 0,
-    maxZoom: 20,
-    ext: 'png'
-  });
-  baseLayer2.addTo(case_vax_map);
-
-  function getColor2(d) {
-  return d > 0.005 ? '#800026' :
-         d > 0.003 ? '#BD0026' :
-         d > 0.002  ? '#E31A1C' :
-         d > 0.001  ? '#FC4E2A' :
-         d > 0.0005   ? '#FD8D3C' :
-         d > 0.0001  ? '#FEB24C' :
-         d > 0  ? '#FED976' :
-                    '#FFEDA0';
-  }
-
-  function getStyle2(feature) {
-    var scaledValue = feature.properties['case_vax_ratio'];
-    var featureColor = getColor2(scaledValue);
-
-    return {
-      color: featureColor,
-      weight: 2,
-    opacity: 1,
-    dashArray: '3',
-    fillOpacity: 0.7
-    };
-  }
-
-  function getTooltip(layer) {
-    var case_vax = layer.feature.properties['case_vax_ratio'];
-    return case_vax;
-  }
-
-  var case_vax_mapdata = {{covid_map}};
-  var dataLayer = L.geoJSON(case_vax_mapdata, {
-    style: getStyle2
-  });
-  dataLayer.bindTooltip(getTooltip)
-  dataLayer.addTo(case_vax_map);
-
-  var overviewLegend = L.control({position: 'bottomright'});
-  overviewLegend.onAdd = function (map) {
-    var container = L.DomUtil.create('div', 'info legend');
-    container.innerHTML = `
-        <ol>
-          <li><span class="key-color" style="background: #FFEDA0;"></span><span class="key-label">Low</span></li>
-          <li><span class="key-color" style="background: #FED976;"></span></li>
-          <li><span class="key-color" style="background: #FEB24C;"></span></li>
-          <li><span class="key-color" style="background: #FD8D3C;"></span></li>
-          <li><span class="key-color" style="background: #FC4E2A;"></span></li>
-          <li><span class="key-color" style="background: #E31A1C;"></span></li>
-          <li><span class="key-color" style="background: #BD0026;"></span></li>
-          <li><span class="key-color" style="background: ##800026;"></span><span class="key-label">High</span></li>
-        </ol>
-        `;
-    return container;
-  };
-  overviewLegend.addTo(case_vax_map);
 
   </script>
 </body>
