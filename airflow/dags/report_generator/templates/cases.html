@@ -32,7 +32,7 @@
     h1 {
       grid-area: header;
     }
-    #case_vax_map {
+    #densitymap {
       grid-area: map2;
       height: 50vh;
     }
@@ -77,7 +77,7 @@
 
   <div id="casechart"></div>
 
-  <div id="case_vax_map"></div>
+  <div id="densitymap"></div>
 
   <div id="agechart"></div>
 
@@ -145,40 +145,40 @@
 
     
     /*
-    
-    case_vax map of vaccinated case rate ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    
-    */  
-    var initialCenter2 = [40.7128, -74.0060];  // <-- Latitude, Longitude
-    var initialZoom2= 10;
-    var case_vax_map = L.map('case_vax_map', {
+
+        MAP OF POP. DENSITY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    */
+    var initialCenter = [40.7128, -74.0060];  // <-- Latitude, Longitude
+    var initialZoom = 10;
+    var densitymap = L.map('densitymap', {
       zoomSnap: 0,
       zoomDelta: 0.25
-    }).setView(initialCenter2, initialZoom2);
+    }).setView(initialCenter, initialZoom);
 
-    var baseLayer2 = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
-      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      subdomains: 'abcd',
-      minZoom: 0,
-      maxZoom: 20,
-      ext: 'png'
+    var baseLayer = new L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.{ext}', {
+    	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    	subdomains: 'abcd',
+    	minZoom: 0,
+    	maxZoom: 20,
+    	ext: 'png'
     });
-    baseLayer2.addTo(case_vax_map);
+    baseLayer.addTo(densitymap);
 
-    function getColor2(d) {
-    return d > 0.005 ? '#800026' :
-          d > 0.003 ? '#BD0026' :
-          d > 0.002  ? '#E31A1C' :
-          d > 0.001  ? '#FC4E2A' :
-          d > 0.0005   ? '#FD8D3C' :
-          d > 0.0001  ? '#FEB24C' :
-          d > 0  ? '#FED976' :
+    function getColor(d) {
+    return d > 7 ? '#800026' :
+           d > 6 ? '#BD0026' :
+           d > 5  ? '#E31A1C' :
+           d > 4  ? '#FC4E2A' :
+           d > 3   ? '#FD8D3C' :
+           d > 2  ? '#FEB24C' :
+           d > 1  ? '#FED976' :
                       '#FFEDA0';
     }
 
-    function getStyle2(feature) {
-      var scaledValue = feature.properties['case_vax_ratio'];
-      var featureColor = getColor2(scaledValue);
+    function getStyle(feature) {
+      var scaledValue = feature.properties['percentpositivity_7day'];
+      var featureColor = getColor(scaledValue);
 
       return {
         color: featureColor,
@@ -190,16 +190,35 @@
     }
 
     function getTooltip(layer) {
-      var case_vax = layer.feature.properties['case_vax_ratio'];
-      return case_vax;
+      var density = layer.feature.properties['percentpositivity_7day'];
+      return density;
     }
 
-    var case_vax_mapdata = {{covid_map}};
-    var dataLayer = L.geoJSON(case_vax_mapdata, {
-      style: getStyle2
+    var densitymapdata = {{covid_map}};
+    var dataLayer = L.geoJSON(densitymapdata, {
+      style: getStyle
     });
     dataLayer.bindTooltip(getTooltip)
-    dataLayer.addTo(case_vax_map);
+    dataLayer.addTo(densitymap);
+
+    var overviewLegend = L.control({position: 'bottomright'});
+    overviewLegend.onAdd = function (map) {
+      var container = L.DomUtil.create('div', 'info legend');
+      container.innerHTML = `
+          <ol>
+            <li><span class="key-color" style="background: #FFEDA0;"></span><span class="key-label">Low</span></li>
+            <li><span class="key-color" style="background: #FED976;"></span></li>
+            <li><span class="key-color" style="background: #FEB24C;"></span></li>
+            <li><span class="key-color" style="background: #FD8D3C;"></span></li>
+            <li><span class="key-color" style="background: #FC4E2A;"></span></li>
+            <li><span class="key-color" style="background: #E31A1C;"></span></li>
+            <li><span class="key-color" style="background: #BD0026;"></span></li>
+            <li><span class="key-color" style="background: ##800026;"></span><span class="key-label">High</span></li>
+          </ol>
+          `;
+      return container;
+    };
+    overviewLegend.addTo(densitymap);
 
     /* 
       
