@@ -20,7 +20,7 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 50vw 50vw;
-      grid-template-rows: auto 35vh 1fr 1fr 1fr 1fr;
+      grid-template-rows: 10vh 35vh auto auto;
       grid-template-areas:
         "header header"
         "map2 map2"
@@ -34,7 +34,6 @@
     }
     #densitymap {
       grid-area: map2;
-      height: 50vh;
     }
     #casechart {
       grid-area: chart2;
@@ -59,6 +58,10 @@
       <a href="deaths.html">Deaths</a>
     </nav>
 
+    <style>
+      table,table tr th, table tr td { border:1px solid #247BA0; }
+      table { min-width: 500px; min-height: 300px; line-height: 25px; text-align: center; border-collapse: collapse;}   
+    </style>
     <table>
       <tr>
         <td>Rank</td>
@@ -230,43 +233,43 @@
       series: [
         {
           name: '0 to 4',
-          data: {{ wk_all['deaths_age_0_4'] }}
+          data: {{ wk_all['case_age_0_4'] }}
         },
         {
           name: '5 to 12',
-          data: {{ wk_all['deaths_age_5_12'] }}
+          data: {{ wk_all['case_age_5_12'] }}
         },
         {
           name: '13 to 17',
-          data: {{ wk_all['deaths_age_13_17'] }}
+          data: {{ wk_all['case_age_13_17'] }}
         },
         {
           name: '18 to 24',
-          data: {{ wk_all['deaths_age_18_24'] }}
+          data: {{ wk_all['case_age_18_24'] }}
         },
         {
           name: '25 to 34',
-          data: {{ wk_all['deaths_age_25_34'] }}
+          data: {{ wk_all['case_age_25_34'] }}
         },
         {
           name: '35 to 44',
-          data: {{ wk_all['deaths_age_35_44'] }}
+          data: {{ wk_all['case_age_35_44'] }}
         },
         {
           name: '45 to 54',
-          data: {{ wk_all['deaths_age_45_54'] }}
+          data: {{ wk_all['case_age_45_54'] }}
         },
         {
           name: '55 to 64',
-          data: {{ wk_all['deaths_age_55_64'] }}
+          data: {{ wk_all['case_age_55_64'] }}
         },
         {
           name: '65 to 74',
-          data: {{ wk_all['deaths_age_65_74'] }}
+          data: {{ wk_all['case_age_65_74'] }}
         },
         {
           name: '75 and up',
-          data: {{ wk_all['deaths_age_75up'] }}
+          data: {{ wk_all['case_age_75up'] }}
         }
       ],
       chart: {

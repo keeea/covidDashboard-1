@@ -23,7 +23,7 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 10vh 1fr 35vh 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 10vh 1fr 1fr 1fr 1fr;
       grid-template-areas:
         "header header"
         "text map"
@@ -35,30 +35,37 @@
     }
     h1 {
       grid-area: header;
+      margin: 1rem;
     }
     #explanatoryText{
       grid-area: text;
+      margin: 1rem;
     }
     #densitymap {
       grid-area: map;
-    height: 350px;
+      height: 350px;
     }
     #casechart {
       grid-area: chart1;
+      margin: 1rem;
     }
     #vaccchart {
       grid-area: chart4;
+      margin: 1rem;
     }
     #hosp_vac_chart{
       grid-area: chart5;
+      margin: 1rem;
     }
     #hosp_case_map {
       grid-area: map2;
-    height: 300px;
+      height: 300px;
+      margin: 1rem;
     }
     #death_case_map {
       grid-area: map3;
-    height: 300px;
+      height: 300px;
+      margin: 1rem;
     }
     .legend {
     padding: 6px 8px;
@@ -397,7 +404,7 @@
         }],
         chart: {
         type: 'bar',
-        height: 350
+        height: 250
         },
         plotOptions: {
           bar: {
