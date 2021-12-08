@@ -17,6 +17,13 @@ hosp_death_28d as (
         death_rate_28day,
         daterange
     from `elated-guild-327520.covid.hosp_death_28d`
+),
+case_death_1d as (
+    select 
+    MODIFIED_ZCTA as modzcta,
+    COVID_DEATH_COUNT,
+    COVID_DEATH_COUNT/COVID_CASE_COUNT as death_case_ratio
+    from `elated-guild-327520.covid.test_death_1d`
 )
 
 select 
@@ -29,7 +36,11 @@ select
         b.hospitalization_rate_28day,
         b.death_count_28day,
         b.death_rate_28day,
-        b.daterange
+        b.daterange,
+        c.COVID_DEATH_COUNT,
+        c.death_case_ratio
 from test_7d as a
 full join hosp_death_28d as b
 on a.modzcta=b.modzcta
+full join case_death_1d as c
+on a.modzcta=c.modzcta

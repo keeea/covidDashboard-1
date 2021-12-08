@@ -16,7 +16,8 @@ def main(ds):
     #top test table
     top_test_df=pd.read_gbq("SELECT * FROM final.top_test")
     #vaccine curve
-    vac_accumulated_by_day_df=pd.read_gbq("SELECT * FROM final.vac_accumulated_by_day")
+
+    vac_accumulated_by_day_df=pd.read_gbq("SELECT * FROM final.vac_accumulated_by_day WHERE date LIKE '%2021'")
     #visualize the hospitalization comparision barplot under vaccine or unvaccine
     breakthrough_df=pd.read_gbq("SELECT * FROM covid.breakthrough")
     #map of ratio of death/treated 
