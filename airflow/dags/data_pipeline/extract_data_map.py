@@ -15,6 +15,12 @@ def main(ds):
     )
     http_to_gcs(
         request_method='get',
+        request_url='https://raw.githubusercontent.com/nychealth/coronavirus-data/master/totals/data-by-modzcta.csv',
+        gcs_bucket_name='anranz_cloudservices',
+        gcs_blob_name=f'covid/{ds}/test_death_1d.csv',
+    )
+    http_to_gcs(
+        request_method='get',
         request_url='https://raw.githubusercontent.com/nychealth/covid-vaccine-data/main/people/coverage-by-modzcta-allages.csv',
         gcs_bucket_name='anranz_cloudservices',
         gcs_blob_name=f'covid/{ds}/vac_now_neigh.csv',
