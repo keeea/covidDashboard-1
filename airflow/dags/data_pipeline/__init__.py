@@ -82,11 +82,61 @@ with DAG(dag_id='data_pipeline',
     # TRANSFORM TASKS ~~~~~
 
     sql_dir = Path(__file__).parent / 'sql'
-
-    transform_final_covid = PythonOperator(
-        task_id='transform_final_covid',
+  
+    transform_staging_test_hosp_death_task = PythonOperator(
+        task_id='transform_staging_test_hosp_death_task',
         python_callable=run_transform_gbq,
-        op_args=['staging', '', sql_dir],
+        op_args=['staging', 'test_hosp_death', sql_dir],
+    )
+    transform_staging_wk_case_death_task = PythonOperator(
+        task_id='transform_staging_wk_case_death_task',
+        python_callable=run_transform_gbq,
+        op_args=['staging', 'wk_case_death', sql_dir],
+    )
+    transform_staging_NYC_map_task = PythonOperator(
+        task_id='transform_staging_NYC_map_task',
+        python_callable=run_transform_gbq,
+        op_args=['staging', 'NYC_map', sql_dir],
+    )
+    transform_staging_vac_now_neigh_task = PythonOperator(
+        task_id='transform_staging_vac_now_neighh_task',
+        python_callable=run_transform_gbq,
+        op_args=['staging', 'vac_now_neigh', sql_dir],
+    )
+    transform_staging_wk_hosp_task = PythonOperator(
+        task_id='transform_staging_wk_hosp_task',
+        python_callable=run_transform_gbq,
+        op_args=['staging', 'wk_hosp', sql_dir],
+    )
+    transform_staging_report_total_task = PythonOperator(
+        task_id='transform_staging_report_total_task',
+        python_callable=run_transform_gbq,
+        op_args=['staging', 'report_total', sql_dir],
+    )
+    transform_final_vac_accumulated_by_day_task = PythonOperator(
+        task_id='transform_final_vac_accumulated_by_day',
+        python_callable=run_transform_gbq,
+        op_args=['final', 'vac_accumulated_by_day', sql_dir],
+    )
+    transform_final_top_test_task = PythonOperator(
+        task_id='transform_final_top_test_task',
+        python_callable=run_transform_gbq,
+        op_args=['final', 'top_test', sql_dir],
+    )
+    transform_final_new_report_task = PythonOperator(
+        task_id='transform_final_new_report_task',
+        python_callable=run_transform_gbq,
+        op_args=['final', 'new_report', sql_dir],
+    )
+    transform_final_covid_map_task = PythonOperator(
+        task_id='transform_final_covid_map_task',
+        python_callable=run_transform_gbq,
+        op_args=['final', 'covid_map', sql_dir],
+    )
+    transform_final_wk_all_task = PythonOperator(
+        task_id='transform_final_wk_all_task',
+        python_callable=run_transform_gbq,
+        op_args=['final', 'wk_all', sql_dir],
     )
 
     # DEPENDENCIES ~~~~~
@@ -108,5 +158,25 @@ with DAG(dag_id='data_pipeline',
         load_wk_all_task,
     ]
 
-    transform_final_covid << load_tasks
-    
+    transform_staging_test_hosp_death_task << load_tasks
+    transform_staging_wk_case_death_task << load_tasks
+    transform_staging_NYC_map_task << load_tasks
+    transform_staging_vac_now_neigh_task << load_tasks
+    transform_staging_wk_hosp_task << load_tasks
+    transform_staging_report_total_task << load_tasks
+
+    transform_staging_tasks = DummyOperator(task_id='wait_for_staging_transforms')
+    transform_staging_tasks << [
+        transform_staging_test_hosp_death_task,
+        transform_staging_wk_case_death_task,
+        transform_staging_NYC_map_task,
+        transform_staging_vac_now_neigh_task,
+        transform_staging_wk_hosp_task,
+        transform_staging_report_total_task
+    ]
+
+    transform_final_vac_accumulated_by_day_task << transform_staging_tasks
+    transform_final_top_test_task << transform_staging_tasks
+    transform_final_new_report_task << transform_staging_tasks
+    transform_final_covid_map_task << transform_staging_tasks
+    transform_final_wk_all_task << transform_staging_tasks
