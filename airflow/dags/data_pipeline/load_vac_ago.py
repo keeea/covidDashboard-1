@@ -4,7 +4,7 @@ import pandas_gbq
 
 def main(ds):
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/vac_ago.csv',
     )
     df = pd.read_csv(local_path)

@@ -1,4 +1,4 @@
 select 
     modzcta,
     geometry
-from `elated-guild-327520.covid.NYC_map`
+from `musa509cloudcomputing.covid.NYC_map`

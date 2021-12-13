@@ -5,7 +5,7 @@ with test_7d as (
         percentpositivity_7day,
         people_positive,
         median_daily_test_rate
-    from `elated-guild-327520.covid.test_7d`
+    from `musa509cloudcomputing.covid.test_7d`
 ),
 
 hosp_death_28d as (
@@ -16,14 +16,14 @@ hosp_death_28d as (
         death_count_28day,
         death_rate_28day,
         daterange
-    from `elated-guild-327520.covid.hosp_death_28d`
+    from `musa509cloudcomputing.covid.hosp_death_28d`
 ),
 case_death_1d as (
     select 
     MODIFIED_ZCTA as modzcta,
     COVID_DEATH_COUNT,
     COVID_DEATH_COUNT/COVID_CASE_COUNT as death_case_ratio
-    from `elated-guild-327520.covid.test_death_1d`
+    from `musa509cloudcomputing.covid.test_death_1d`
 )
 
 select 

@@ -4,7 +4,7 @@ import pandas_gbq
 
 def main(ds):
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/wk_case_age.csv',
     )
 
@@ -12,7 +12,7 @@ def main(ds):
     df.to_gbq(f'covid.wk_case_age',if_exists='replace')
 
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/wk_case_race.csv',
     )
 
@@ -20,7 +20,7 @@ def main(ds):
     df.to_gbq(f'covid.wk_case_race',if_exists='replace')
 
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/wk_death_age.csv',
     )
 
@@ -28,7 +28,7 @@ def main(ds):
     df.to_gbq(f'covid.wk_death_age',if_exists='replace')
 
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/wk_death_race.csv',
     )
 
@@ -36,7 +36,7 @@ def main(ds):
     df.to_gbq(f'covid.wk_death_race',if_exists='replace')
 
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/wk_hosp_age.csv',
     )
 
@@ -44,7 +44,7 @@ def main(ds):
     df.to_gbq(f'covid.wk_hosp_age',if_exists='replace')
 
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/wk_hosp_race.csv',
     )
 

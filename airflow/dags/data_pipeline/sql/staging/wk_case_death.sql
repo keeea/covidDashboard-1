@@ -1,6 +1,6 @@
 with wk_case as (
     select 
-        `elated-guild-327520.covid.wk_case_age`.week_ending as week_ending,
+        `musa509cloudcomputing.covid.wk_case_age`.week_ending as week_ending,
         age_0_4,
         age_5_12,
         age_13_17,
@@ -15,14 +15,14 @@ with wk_case as (
         Black_African_American,
         Hispanic_Latino,
         White
-    from `elated-guild-327520.covid.wk_case_age` 
-    full join `elated-guild-327520.covid.wk_case_race` 
-    on `elated-guild-327520.covid.wk_case_age`.week_ending = `elated-guild-327520.covid.wk_case_race` .week_ending
+    from `musa509cloudcomputing.covid.wk_case_age` 
+    full join `musa509cloudcomputing.covid.wk_case_race` 
+    on `musa509cloudcomputing.covid.wk_case_age`.week_ending = `musa509cloudcomputing.covid.wk_case_race` .week_ending
     ),
 
 wk_death as (
     select 
-        `elated-guild-327520.covid.wk_death_age`.week_ending as week_ending,
+        `musa509cloudcomputing.covid.wk_death_age`.week_ending as week_ending,
         age_0_17,
         age_18_24,
         age_25_34,
@@ -35,9 +35,9 @@ wk_death as (
         Black_African_American,
         Hispanic_Latino,
         White
-    from `elated-guild-327520.covid.wk_death_age`
-    full join `elated-guild-327520.covid.wk_death_race`
-    on `elated-guild-327520.covid.wk_death_age`.week_ending = `elated-guild-327520.covid.wk_death_race`.week_ending
+    from `musa509cloudcomputing.covid.wk_death_age`
+    full join `musa509cloudcomputing.covid.wk_death_race`
+    on `musa509cloudcomputing.covid.wk_death_age`.week_ending = `musa509cloudcomputing.covid.wk_death_race`.week_ending
 )
 
 select 

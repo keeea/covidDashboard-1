@@ -4,4 +4,4 @@ select
     sum(CASE_COUNT) as case_count_total,
     sum(HOSPITALIZED_COUNT) as hosp_count_total,
     sum(DEATH_COUNT) as death_count_total
- from `elated-guild-327520.covid.daily_summary`
+ from `musa509cloudcomputing.covid.daily_summary`

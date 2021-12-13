@@ -5,7 +5,7 @@ with recent_7day_avg as (
         CASE_COUNT_7DAY_AVG,
         HOSP_COUNT_7DAY_AVG,
         DEATH_COUNT_7DAY_AVG
-    from `elated-guild-327520.covid.daily_summary`
+    from `musa509cloudcomputing.covid.daily_summary`
     where PARSE_DATE("%m/%d/%Y", date_of_interest) = DATE_SUB(current_date, INTERVAL 7 DAY)
 ),
 
@@ -17,7 +17,7 @@ past_14to21day_avg as (
         CASE_COUNT_7DAY_AVG as p_CASE_COUNT_7DAY_AVG,
         HOSP_COUNT_7DAY_AVG as p_HOSP_COUNT_7DAY_AVG,
         DEATH_COUNT_7DAY_AVG as p_DEATH_COUNT_7DAY_AVG
-    from `elated-guild-327520.covid.daily_summary`
+    from `musa509cloudcomputing.covid.daily_summary`
     where PARSE_DATE("%m/%d/%Y", date_of_interest)= DATE_SUB(current_date, INTERVAL 21 DAY)
 ),
 
@@ -43,7 +43,7 @@ select
     a.case_change as Change,
     b.case_count_total as Count_Total,
 from report_1 a  
-full join `elated-guild-327520.staging.report_total` b
+full join `musa509cloudcomputing.staging.report_total` b
 on a.key=b.key
 union all
 select
@@ -52,7 +52,7 @@ select
     a.hosp_change as Change,
     b.hosp_count_total as Count_Total,
 from report_1 a  
-full join `elated-guild-327520.staging.report_total` b
+full join `musa509cloudcomputing.staging.report_total` b
 on a.key=b.key
 union all
 select
@@ -61,5 +61,5 @@ select
     a.death_change as Change,
     b.death_count_total as Count_Total
 from report_1 a  
-full join `elated-guild-327520.staging.report_total` b
+full join `musa509cloudcomputing.staging.report_total` b
 on a.key=b.key

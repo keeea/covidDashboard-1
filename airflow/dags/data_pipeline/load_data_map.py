@@ -4,7 +4,7 @@ import pandas_gbq
 
 def main(ds):
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/test_7d.csv',
     )
 
@@ -14,7 +14,7 @@ def main(ds):
 
 
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/hosp_death_28d.csv',
     )
 
@@ -24,7 +24,7 @@ def main(ds):
 
 
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/test_death_1d.csv',
     )
 
@@ -34,7 +34,7 @@ def main(ds):
 
 
     local_path = gcs_to_local_file(
-        gcs_bucket_name='anranz_cloudservices',
+        gcs_bucket_name='clementi_509_airflowcloud_bucket',
         gcs_blob_name=f'covid/{ds}/vac_now_neigh.csv',
     )
 

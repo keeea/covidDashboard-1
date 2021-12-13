@@ -1,5 +1,5 @@
 select 
-    `elated-guild-327520.covid.wk_hosp_age`.week_ending as week_ending,
+    `musa509cloudcomputing.covid.wk_hosp_age`.week_ending as week_ending,
     age_0_4,
     age_5_12,
     age_13_17,
@@ -14,6 +14,6 @@ select
     Black_African_American,
     Hispanic_Latino,
     White
-from `elated-guild-327520.covid.wk_hosp_age` 
-full join `elated-guild-327520.covid.wk_hosp_race`
-on `elated-guild-327520.covid.wk_hosp_age`.week_ending = `elated-guild-327520.covid.wk_hosp_race`.week_ending
+from `musa509cloudcomputing.covid.wk_hosp_age` 
+full join `musa509cloudcomputing.covid.wk_hosp_race`
+on `musa509cloudcomputing.covid.wk_hosp_age`.week_ending = `musa509cloudcomputing.covid.wk_hosp_race`.week_ending
