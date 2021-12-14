@@ -56,18 +56,18 @@ select
     a.Black_African_American case_Black_African_American,
     a.Hispanic_Latino case_Hispanic_Latino,
     a.White case_White,
-    b.age_0_17 death_age_0_17,
-    b.age_18_24 death_age_18_24,
-    b.age_25_34 death_age_25_34,
-    b.age_35_44 death_age_35_44,
-    b.age_45_54 death_age_45_54,
-    b.age_55_64 death_age_55_64,
-    b.age_65_74 death_age_65_74,
-    b.age_75up death_age_75up,
-    b.Asian_Pacific_Islander death_Asian_Pacific_Islander,
-    b.Black_African_American death_Black_African_American,
-    b.Hispanic_Latino death_Hispanic_Latino,
-    b.White death_White 
+    IFNULL(b.age_0_17,0) death_age_0_17,
+    IFNULL(b.age_18_24,0) death_age_18_24,
+    IFNULL(b.age_25_34,0) death_age_25_34,
+    IFNULL(b.age_35_44,0) death_age_35_44,
+    IFNULL(b.age_45_54,0) death_age_45_54,
+    IFNULL(b.age_55_64,0) death_age_55_64,
+    IFNULL(b.age_65_74,0) death_age_65_74,
+    IFNULL(b.age_75up,0) death_age_75up,
+    IFNULL(b.Asian_Pacific_Islander,0) death_Asian_Pacific_Islander,
+    IFNULL(b.Black_African_American,0) death_Black_African_American,
+    IFNULL(b.Hispanic_Latino,0) death_Hispanic_Latino,
+    IFNULL(b.White,0) death_White 
 from wk_case as a
 full join wk_death as b
 on a.week_ending=b.week_ending 
