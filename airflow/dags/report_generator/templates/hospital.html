@@ -25,7 +25,7 @@
         "header header"
         "map2 map2"
         "table1 chart2"
-        "chart6 chart6";
+        "chart6 chart7";
       column-gap: 1rem;
       row-gap: 1rem;
     }
@@ -35,15 +35,19 @@
     #densitymap {
       grid-area: map2;
     }
+    #summarytable {
+      grid-area: table1;
+    }
     #hospchart {
       grid-area: chart2;
     }
     #agechart{
       grid-area: chart6;
-    } 
-    #summarytable {
-      grid-area: table1;
     }
+    #racechart{
+      grid-area: chart7;
+    } 
+    
   </style>
 </head>
 
@@ -83,6 +87,8 @@
   <div id="densitymap"></div>
 
   <div id="agechart"></div>
+
+  <div id="racechart"></div>
 
   <!-- Leaflet JavaScript library is below -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -225,7 +231,7 @@
 
     /* 
       
-    COVID Cases by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+    COVID Hospitalizations by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
     
     */
     
@@ -298,6 +304,59 @@
     };
       
     var agechart = new ApexCharts(document.querySelector("#agechart"), agechartoptions);
+    agechart.render();
+
+    /* 
+      
+    COVID Hospitalizations by Race ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+    
+    */
+    
+    var agechartoptions = {
+      series: [
+        {
+          name: 'Asian Pacific Islander',
+          data: {{ wk_all['hosp_Asian_Pacific_Islander'] }}
+        },
+        {
+          name: 'Black/African American',
+          data: {{ wk_all['hosp_Black_African_American'] }}
+        },
+        {
+          name: 'Hispanic/Latinx',
+          data: {{ wk_all['hosp_Hispanic_Latino'] }}
+        },
+        {
+          name: 'White',
+          data: {{ wk_all['hosp_White'] }}
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+        },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      title: {
+        text: 'Positivity by Race',
+        align: 'left'
+      },
+    };
+      
+    var agechart = new ApexCharts(document.querySelector("#racechart"), agechartoptions);
     agechart.render();
 
   </script>
