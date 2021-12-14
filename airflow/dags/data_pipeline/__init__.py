@@ -20,7 +20,7 @@ from . import load_wk_all
 from . import transform_final_covid
 
 with DAG(dag_id='data_pipeline',
-         schedule_interval='@daily',
+         schedule_interval='@hourly',
          start_date=datetime(2021, 10, 22),
          catchup=False) as dag:
 

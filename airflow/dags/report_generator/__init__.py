@@ -7,7 +7,7 @@ from datetime import datetime
 from . import generate_report1
 
 with DAG(dag_id='report_generator',
-         schedule_interval='@daily',
+         schedule_interval='@hourly',
          start_date=datetime(2021, 10, 22),
          catchup=False) as dag:
 
