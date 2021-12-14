@@ -2,7 +2,7 @@ import geopandas as gpd
 import pandas as pd
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, FileSystemLoader
 from pipeline_tools import local_file_to_gcs
 
 def main(ds):
@@ -28,14 +28,23 @@ def main(ds):
     covid_map_df.geometry = gpd.GeoSeries.from_wkt(covid_map_df.geometry)
     covid_map_gdf = gpd.GeoDataFrame(covid_map_df, geometry='geometry')
 
+    # Load the templates.
+    templates_folder = Path(__file__).parent / 'templates'
+    template_env = Environment(loader=FileSystemLoader(templates_folder))
+    IndexTemplate = template_env.get_template('index.html')
+    casesTemplate = template_env.get_template('cases.html')
+    deathsTemplate = template_env.get_template('deaths.html')
+    hospitalTemplate = template_env.get_template('hospital.html')
+
+
     # Determine the folder to save the rendered report pages into; create it if
     # it doesn't already exist. E.g.: report_generator/_reports/2021-11-22/
-    output_folder = Path(__file__).parent / '_reports' / ds.isoformat()
+    output_folder = Path(__file__).parent / '_reports' / ds
     output_folder.mkdir(parents=True, exist_ok=True)
 
+
+
     # Render the data into the templates.
-    IndexEnv = Environment(loader=PackageLoader('generate_report1'))
-    IndexTemplate = IndexEnv.get_template('index.html')
     IndexOutput = IndexTemplate.render(
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
@@ -46,7 +55,6 @@ def main(ds):
         breakthrough=breakthrough_df.to_dict('list'),
         #death_treated=dh_28day.to_dict('list')
     )
-
 
     # Write the report to the local folder, and upload to GCS.
     with open(output_folder / 'index.html', 'w') as local_file:
@@ -60,34 +68,8 @@ def main(ds):
     print("Index.html report generated!")
 
 
-    # Render the deaths into the templates.
-    deathsEnv = Environment(loader=PackageLoader('generate_report1'))
-    deathsTemplate = deathsEnv.get_template('deaths.html')
-    deathsOutput = deathsTemplate.render(
-        wk_all=wk_all_df.to_dict('list'),
-        daily_summary=daily_summary_df.to_dict('list'),
-        covid_map=covid_map_gdf.to_json(),
-        new_report=new_report_df.to_dict('list'),
-        top_test=top_test_df.to_dict('records'),
-        vac_accumulated_by_day=vac_accumulated_by_day_df.to_dict('list'),
-        breakthrough=breakthrough_df.to_dict('list'),
-        #death_treated=dh_28day.to_dict('list')
-    )
-
-    # Write the auxiliary report to the local folder, and upload to GCS.
-    with open(output_folder / 'deaths.html', 'w') as local_file:
-        local_file.write(deathsOutput)
-        local_file_to_gcs(
-            local_file_name=local_file.name,
-            gcs_bucket_name='clementi_509_airflowcloud_bucket',
-            gcs_blob_name=f'{ds}/deaths.html',
-            content_type='text/html,'
-        )
-    print("deaths.html report generated!")
 
     # Render the cases into the templates.
-    casesEnv = Environment(loader=PackageLoader('generate_report1'))
-    casesTemplate = casesEnv.get_template('cases.html')
     casesOutput = casesTemplate.render(
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
@@ -99,7 +81,7 @@ def main(ds):
         #death_treated=dh_28day.to_dict('list')
     )
 
-    # Write the auxiliary report to the local folder, and upload to GCS.
+    # Write the cases report to the local folder, and upload to GCS.
     with open(output_folder / 'cases.html', 'w') as local_file:
         local_file.write(casesOutput)
         local_file_to_gcs(
@@ -110,9 +92,34 @@ def main(ds):
         )
     print("cases.html report generated!")
 
+
+
+    # Render the deaths into the templates.
+    deathsOutput = deathsTemplate.render(
+        wk_all=wk_all_df.to_dict('list'),
+        daily_summary=daily_summary_df.to_dict('list'),
+        covid_map=covid_map_gdf.to_json(),
+        new_report=new_report_df.to_dict('list'),
+        top_test=top_test_df.to_dict('records'),
+        vac_accumulated_by_day=vac_accumulated_by_day_df.to_dict('list'),
+        breakthrough=breakthrough_df.to_dict('list'),
+        #death_treated=dh_28day.to_dict('list')
+    )
+
+    # Write the deaths report to the local folder, and upload to GCS.
+    with open(output_folder / 'deaths.html', 'w') as local_file:
+        local_file.write(deathsOutput)
+        local_file_to_gcs(
+            local_file_name=local_file.name,
+            gcs_bucket_name='clementi_509_airflowcloud_bucket',
+            gcs_blob_name=f'{ds}/deaths.html',
+            content_type='text/html,'
+        )
+    print("deaths.html report generated!")
+
+
+
     # Render the hospital into the templates.
-    hospitalEnv = Environment(loader=PackageLoader('generate_report1'))
-    hospitalTemplate = hospitalEnv.get_template('hospital.html')
     hospitalOutput = hospitalTemplate.render(
         wk_all=wk_all_df.to_dict('list'),
         daily_summary=daily_summary_df.to_dict('list'),
@@ -140,4 +147,4 @@ def main(ds):
 
 if __name__ == '__main__':
     import datetime as dt
-    main(ds=dt.date.today())
+    main(ds=dt.date.today().isoformat())
