@@ -123,6 +123,16 @@ with DAG(dag_id='data_pipeline',
         python_callable=run_transform_gbq,
         op_args=['final', 'top_test', sql_dir],
     )
+    transform_final_top_hosp_task = PythonOperator(
+        task_id='transform_final_top_hosp_task',
+        python_callable=run_transform_gbq,
+        op_args=['final', 'top_hosp', sql_dir],
+    )
+    transform_final_top_death_task = PythonOperator(
+        task_id='transform_final_top_death_task',
+        python_callable=run_transform_gbq,
+        op_args=['final', 'top_death', sql_dir],
+    )
     transform_final_new_report_task = PythonOperator(
         task_id='transform_final_new_report_task',
         python_callable=run_transform_gbq,
@@ -177,6 +187,8 @@ with DAG(dag_id='data_pipeline',
 
     transform_final_vac_accumulated_by_day_task << transform_staging_tasks
     transform_final_top_test_task << transform_staging_tasks
+    transform_final_top_hosp_task << transform_staging_tasks
+    transform_final_top_death_task << transform_staging_tasks
     transform_final_new_report_task << transform_staging_tasks
     transform_final_covid_map_task << transform_staging_tasks
     transform_final_wk_all_task << transform_staging_tasks
