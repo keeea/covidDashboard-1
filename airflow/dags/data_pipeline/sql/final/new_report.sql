@@ -6,7 +6,8 @@ with recent_7day_avg as (
         HOSP_COUNT_7DAY_AVG,
         DEATH_COUNT_7DAY_AVG
     from `musa509cloudcomputing.covid.daily_summary`
-    where PARSE_DATE("%m/%d/%Y", date_of_interest) = DATE_SUB(current_date, INTERVAL 7 DAY)
+    # the true interval here should be 1 (data of 1 day ago), but due to data unreliability we replace it with the data of 14 days ago 
+    where PARSE_DATE("%m/%d/%Y", date_of_interest) = DATE_SUB(current_date, INTERVAL 14 DAY)
 ),
 
 past_14to21day_avg as (
@@ -18,7 +19,8 @@ past_14to21day_avg as (
         HOSP_COUNT_7DAY_AVG as p_HOSP_COUNT_7DAY_AVG,
         DEATH_COUNT_7DAY_AVG as p_DEATH_COUNT_7DAY_AVG
     from `musa509cloudcomputing.covid.daily_summary`
-    where PARSE_DATE("%m/%d/%Y", date_of_interest)= DATE_SUB(current_date, INTERVAL 21 DAY)
+    # the true interval here should be 15 (data of 15 days ago), but due to data unreliability we replace it with the data of 28 days ago 
+    where PARSE_DATE("%m/%d/%Y", date_of_interest)= DATE_SUB(current_date, INTERVAL 28 DAY)
 ),
 
 report_1 as (
