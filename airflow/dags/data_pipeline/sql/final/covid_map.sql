@@ -31,6 +31,7 @@ select
     a.death_count_28day,
     a.death_rate_28day,
     a.daterange,
+    a.COVID_DEATH_COUNT,
     a.death_case_ratio_1day,
     a.hospitalization_count_28day/a.people_positive as hosp_case_ratio_avg,
     IF( hospitalization_count_28day_avg=0, 0, (a.COVID_DEATH_COUNT/a.hospitalization_count_28day_avg)) as death_hosp_ratio_mix,
