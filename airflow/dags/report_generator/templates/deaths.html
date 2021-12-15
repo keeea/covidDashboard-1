@@ -46,8 +46,8 @@
     }
     #racechart{
       grid-area: chart7;
-    } 
-    
+    }
+
   </style>
 </head>
 
@@ -64,7 +64,7 @@
 
     <style>
       table,table tr th, table tr td { border:1px solid #247BA0; }
-      table { min-width: 500px; min-height: 300px; line-height: 25px; text-align: center; border-collapse: collapse;}   
+      table { min-width: 500px; min-height: 300px; line-height: 25px; text-align: center; border-collapse: collapse;}
     </style>
     <table>
       <tr>
@@ -105,11 +105,11 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
   <script>
-    
+
     /*
-    
+
     deaths ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     */
     var options = {
         series: [{
@@ -148,13 +148,13 @@
     var deathchart = new ApexCharts(document.querySelector("#deathchart"), options);
     deathchart.render();
 
-    
-    
+
+
     /*
-    
-    densitymap of vaccinated case rate ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    
-    */  
+
+    densitymap of vaccinated case rate ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    */
     var initialCenter = [40.7128, -74.0060];  // <-- Latitude, Longitude
     var initialZoom = 10;
     var densitymap = L.map('densitymap', {
@@ -172,18 +172,18 @@
     baseLayer.addTo(densitymap);
 
     function getColor(d) {
-      return d > 0.06 ? '#800026' :
-             d > 0.05 ? '#BD0026' :
-             d > 0.04  ? '#E31A1C' :
-             d > 0.03  ? '#FC4E2A' :
-             d > 0.02   ? '#FD8D3C' :
-             d > 0.01  ? '#FEB24C' :
-             d > 0  ? '#FED976' :
+      return d > 350 ? '#800026' :
+             d > 300 ? '#BD0026' :
+             d > 250  ? '#E31A1C' :
+             d > 200  ? '#FC4E2A' :
+             d > 150   ? '#FD8D3C' :
+             d > 100  ? '#FEB24C' :
+             d > 50 ? '#FED976' :
                       '#FFEDA0';
       }
 
     function getStyle(feature) {
-      var scaledValue = feature.properties['death_case_ratio_1day'];
+      var scaledValue = feature.properties['COVID_DEATH_COUNT'];
       var featureColor = getColor(scaledValue);
 
       return {
@@ -196,7 +196,7 @@
     }
 
     function getTooltip(layer) {
-      var density = layer.feature.properties['death_case_ratio_1day'];
+      var density = layer.feature.properties['COVID_DEATH_COUNT'];
       return density;
     }
 
@@ -226,12 +226,12 @@
     };
     overviewLegend.addTo(densitymap);
 
-    /* 
-      
-    COVID Deaths by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    
+    /*
+
+    COVID Deaths by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     */
-    
+
     var agechartoptions = {
       series: [
         {
@@ -291,16 +291,16 @@
         align: 'left'
       },
     };
-      
+
     var agechart = new ApexCharts(document.querySelector("#agechart"), agechartoptions);
     agechart.render();
 
-    /* 
-      
-    COVID Deaths by Race ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    
+    /*
+
+    COVID Deaths by Race ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     */
-    
+
     var agechartoptions = {
       series: [
         {
@@ -344,7 +344,7 @@
         align: 'left'
       },
     };
-      
+
     var agechart = new ApexCharts(document.querySelector("#racechart"), agechartoptions);
     agechart.render();
 
