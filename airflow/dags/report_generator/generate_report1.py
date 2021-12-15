@@ -65,7 +65,7 @@ def main(ds):
         local_file.write(IndexOutput)
         local_file_to_gcs(
             local_file_name=local_file.name,
-            gcs_bucket_name='clementi_509_airflowcloud_bucket',
+            gcs_bucket_name='coviddashboard_publicbucket',
             gcs_blob_name=f'{ds}/index.html',
             content_type='text/html,'
         )
@@ -90,7 +90,7 @@ def main(ds):
         local_file.write(casesOutput)
         local_file_to_gcs(
             local_file_name=local_file.name,
-            gcs_bucket_name='clementi_509_airflowcloud_bucket',
+            gcs_bucket_name='coviddashboard_publicbucket',
             gcs_blob_name=f'{ds}/cases.html',
             content_type='text/html,'
         )
@@ -115,7 +115,7 @@ def main(ds):
         local_file.write(deathsOutput)
         local_file_to_gcs(
             local_file_name=local_file.name,
-            gcs_bucket_name='clementi_509_airflowcloud_bucket',
+            gcs_bucket_name='coviddashboard_publicbucket',
             gcs_blob_name=f'{ds}/deaths.html',
             content_type='text/html,'
         )
@@ -140,7 +140,7 @@ def main(ds):
         local_file.write(hospitalOutput)
         local_file_to_gcs(
             local_file_name=local_file.name,
-            gcs_bucket_name='clementi_509_airflowcloud_bucket',
+            gcs_bucket_name='coviddashboard_publicbucket',
             gcs_blob_name=f'{ds}/hospital.html',
             content_type='text/html,'
         )
