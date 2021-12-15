@@ -20,7 +20,7 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 50vw 50vw;
-      grid-template-rows: 10vh 35vh auto auto;
+      grid-template-rows: 10vh auto auto auto;
       grid-template-areas:
         "header header"
         "map2 map2"
@@ -32,8 +32,11 @@
     h1 {
       grid-area: header;
     }
-    #densitymap {
+    #densitymapWrapper {
       grid-area: map2;
+        }
+    #densitymap {
+      height:35vh;
     }
     #summarytable {
       grid-area: table1;
@@ -84,7 +87,10 @@
 
   <div id="deathchart"></div>
 
-  <div id="densitymap"></div>
+  <div id="densitymapWrapper">
+    <h3>Map of total COVID death count in NYC </h3>
+    <div id="densitymap"></div>
+  </div>
 
   <div id="agechart"></div>
 

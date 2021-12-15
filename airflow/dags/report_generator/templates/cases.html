@@ -20,7 +20,7 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 50vw 50vw;
-      grid-template-rows: 10vh 35vh auto auto;
+      grid-template-rows: 10vh auto auto auto;
       grid-template-areas:
         "header header"
         "map2 map2"
@@ -32,8 +32,11 @@
     h1 {
       grid-area: header;
     }
-    #densitymap {
+    #densitymapWrapper {
       grid-area: map2;
+        }
+    #densitymap {
+      height:35vh;
     }
     #summarytable {
       grid-area: table1;
@@ -47,8 +50,8 @@
     #racechart{
       grid-area: chart7;
     }
-    
-    
+
+
   </style>
 </head>
 
@@ -65,7 +68,7 @@
 
     <style>
       table,table tr th, table tr td { border:1px solid #247BA0; }
-      table { min-width: 500px; min-height: 300px; line-height: 25px; text-align: center; border-collapse: collapse;}   
+      table { min-width: 500px; min-height: 300px; line-height: 25px; text-align: center; border-collapse: collapse;}
     </style>
     <table>
       <tr>
@@ -85,7 +88,10 @@
 
   <div id="casechart"></div>
 
-  <div id="densitymap"></div>
+  <div id="densitymapWrapper">
+    <h3>Map of postive tested percentage over last 7 days </h3>
+    <div id="densitymap"></div>
+  </div>
 
   <div id="agechart"></div>
 
@@ -106,12 +112,12 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
   <script>
-    
-    
+
+
     /*
-    
+
     hosp ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     */
 
     var options = {
@@ -153,7 +159,7 @@
     var casechart = new ApexCharts(document.querySelector("#casechart"), options);
     casechart.render();
 
-    
+
     /*
 
         MAP OF POP. DENSITY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -230,12 +236,12 @@
     };
     overviewLegend.addTo(densitymap);
 
-    /* 
-      
-    COVID Cases by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    
+    /*
+
+    COVID Cases by Age ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     */
-    
+
     var agechartoptions = {
       series: [
         {
@@ -303,17 +309,17 @@
         align: 'left'
       },
     };
-      
+
     var agechart = new ApexCharts(document.querySelector("#agechart"), agechartoptions);
     agechart.render();
 
 
-    /* 
-      
-    COVID Cases by Race ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    
+    /*
+
+    COVID Cases by Race ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     */
-    
+
     var agechartoptions = {
       series: [
         {
@@ -357,7 +363,7 @@
         align: 'left'
       },
     };
-      
+
     var agechart = new ApexCharts(document.querySelector("#racechart"), agechartoptions);
     agechart.render();
 
