@@ -15,6 +15,10 @@ def main(ds):
     new_report_df=pd.read_gbq("SELECT * FROM final.new_report")
     #top test table
     top_test_df=pd.read_gbq("SELECT * FROM final.top_test")
+    #top hosp table
+    top_hosp_df=pd.read_gbq("SELECT * FROM final.top_hosp")
+    #top death table
+    top_death_df=pd.read_gbq("SELECT * FROM final.top_death")
     #vaccine curve
 
     vac_accumulated_by_day_df=pd.read_gbq("SELECT * FROM final.vac_accumulated_by_day WHERE date LIKE '%2021'")
@@ -100,7 +104,7 @@ def main(ds):
         daily_summary=daily_summary_df.to_dict('list'),
         covid_map=covid_map_gdf.to_json(),
         new_report=new_report_df.to_dict('list'),
-        top_test=top_test_df.to_dict('records'),
+        top_death=top_death_df.to_dict('records'),
         vac_accumulated_by_day=vac_accumulated_by_day_df.to_dict('list'),
         breakthrough=breakthrough_df.to_dict('list'),
         #death_treated=dh_28day.to_dict('list')
@@ -125,7 +129,7 @@ def main(ds):
         daily_summary=daily_summary_df.to_dict('list'),
         covid_map=covid_map_gdf.to_json(),
         new_report=new_report_df.to_dict('list'),
-        top_test=top_test_df.to_dict('records'),
+        top_hosp=top_hosp_df.to_dict('records'),
         vac_accumulated_by_day=vac_accumulated_by_day_df.to_dict('list'),
         breakthrough=breakthrough_df.to_dict('list'),
         #death_treated=dh_28day.to_dict('list')

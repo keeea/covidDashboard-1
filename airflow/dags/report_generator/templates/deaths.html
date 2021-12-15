@@ -70,13 +70,13 @@
       <tr>
         <td>Rank</td>
         <td>Region</td>
-        <td>14-day Positive rate</td>
+        <td>Cumulative rate per 100,000 people</td>
       </tr>
-      {% for current_test in top_test %}
+      {% for current_test in top_death %}
       <tr>
         <td>{{ current_test.Rank }}</td>
         <td>{{ current_test.neighborhood_name }}</td>
-        <td>{{ current_test.percent_positivity_7day }}</td>
+        <td>{{ current_test.COVID_DEATH_RATE_1d }}</td>
       </tr>
       {% endfor %}
     </table>

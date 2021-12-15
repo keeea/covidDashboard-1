@@ -23,13 +23,14 @@
       font-family: sans;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 10vh 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 10vh 1fr 1fr 1fr 1fr 1fr 1fr;
       grid-template-areas:
         "header header"
         "text map"
         "chart1 chart4"
         "chart2 chart3"
         "chart5 chart5"
+        "text2 text3"
         "map2 map3"
         "footer footer";
       column-gap: 1rem;
@@ -45,6 +46,14 @@
     }
     #explanatoryText{
       grid-area: text;
+      margin: 1rem;
+    }
+    #text2{
+      grid-area: text2;
+      margin: 1rem;
+    }
+    #text3{
+      grid-area: text3;
       margin: 1rem;
     }
     #densitymap {
@@ -71,12 +80,12 @@
     }
     #hosp_case_map {
       grid-area: map2;
-      height: 80%;
+      height: 300px;
       margin: 1rem;
     }
     #death_case_map {
       grid-area: map3;
-      height: 80%;
+      height: 300px;
       margin: 1rem;
     }
     .legend {
@@ -157,15 +166,21 @@
 
   <div id="hospchart"></div>
 
+  <div id="text2">
+    <h3>Severe Morbidity Rate of Infestor</h3>
+    <p>The darker colors are, the higher the severe morbidity regions have, which indicates that COVID infected people living in these darker regions are more likely to become severely ill due to lower vaccinated rate or other reasons. Therefore, the government needs to pay more attention to these neighborhoods, and more policies that encourage vaccination need to be formulated toward them.</p>
+  </div>
+
+  <div id="text3">
+    <h3>Mortality Rate of Infestor</h3>
+    <p>The darker colors are, the higher the mortality rate regions have, which indicates that COVID infected people living in these darker regions are more likely to dead from COVID-19 due to imperfect medical resource, poor hospitalization access or other reasons. Therefore, the government needs to provide more public support to these neighborhoods, and allocate more policy, financial and medical resource to these areas. </p>
+  </div>
+
   <div id="hosp_vac_chart"></div>
 
-  <div id="hosp_case_map">
-    <p>Rate of Severe Morbidity</p>
-  </div>
+  <div id="hosp_case_map"></div>
 
-  <div id="death_case_map">
-    <p>Rate of Mortality</p>
-  </div>
+  <div id="death_case_map"></div>
 
   <div id="footer">
     <h4>Dashboard was created by Anran Zheng, Lan Xiao, and Johnathan Clementi for the MUSA Geospatial Cloud Computing course at the University of Pennsylvania, Fall 2021</h4>
