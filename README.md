@@ -7,6 +7,7 @@
 
 ## Dashboard Page
 [page](https://storage.googleapis.com/coviddashboard_publicbucket/2021-12-15/index.html)
+
 The data are no longer automatically updated due to the cloud platform fees.
 
 ## Abstract
