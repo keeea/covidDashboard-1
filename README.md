@@ -5,6 +5,9 @@
 * Johnathan Clementi, clementi@design.upenn.edu
 * Lan Xiao, lanxiao@design.upenn.edu
 
+## Dashboard Page
+[page](https://storage.googleapis.com/coviddashboard_publicbucket/2021-12-15/index.html)
+
 ## Abstract
 ### Situation
 
